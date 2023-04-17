@@ -1,0 +1,15 @@
+*.iml
+*.iws
+*.ipr
+.idea/
+!.idea/runConfigurations/
+.settings/
+.project
+.classpath
+node_modules/
+.gradle
+!gradle/wrapper/gradle-wrapper.jar
+build/
+bin/
+!**/src/main/**/build/
+!**/src/test/**/build/
