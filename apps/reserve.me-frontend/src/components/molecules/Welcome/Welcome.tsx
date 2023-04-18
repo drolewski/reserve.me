@@ -8,7 +8,11 @@ const Welcome = ({navigation}: any) => {
         index: 0,
         routes: [{ name: 'Register' }],
       })}/>
-      <Button title="Home" onPress={() => navigation.reset({
+      <Button title="Login" onPress={() => navigation.reset({
+        index: 0,
+        routes: [{ name: 'Login' }],
+      })}/>
+        <Button title="Home" onPress={() => navigation.reset({
         index: 0,
         routes: [{ name: 'Home' }],
       })}/>
