@@ -1,6 +1,8 @@
 # Reserve.me backend
 
 ## Configuration
+
+- PRODUCTION_MODE
 - MONGODB_DATABASE
 - MONGODB_USERNAME
 - MONGODB_PASSWORD
