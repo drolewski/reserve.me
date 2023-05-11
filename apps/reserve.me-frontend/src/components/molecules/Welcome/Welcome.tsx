@@ -1,4 +1,5 @@
 import {Button, Text, View} from 'react-native';
+import Settings from '../Profile/Profile';
 
 const Welcome = ({navigation}: any) => {
   return (
@@ -15,6 +16,10 @@ const Welcome = ({navigation}: any) => {
         <Button title="Home" onPress={() => navigation.reset({
         index: 0,
         routes: [{ name: 'Home' }],
+      })}/>
+        <Button title="Profile" onPress={() => navigation.reset({
+        index: 0,
+        routes: [{ name: 'Profile' }],
       })}/>
     </View>
   );

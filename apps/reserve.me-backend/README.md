@@ -1,0 +1,8 @@
+# Reserve.me backend
+
+## Configuration
+- MONGODB_DATABASE
+- MONGODB_USERNAME
+- MONGODB_PASSWORD
+- MONGODB_HOST
+- MONGODB_PORT

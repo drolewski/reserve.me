@@ -3,6 +3,8 @@ import Welcome from '../../components/molecules/Welcome/Welcome';
 import Register from '../../components/molecules/Register/Register';
 import Home from '../../components/molecules/Home/Home';
 import Login from '../../components/molecules/Login/Login';
+import Profile from '../../components/molecules/Profile/Profile';
+import UserData from '../../components/molecules/Profile/UserData/UserData';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +22,12 @@ const AppNavigationStack = () => {
                           options={{headerShown: false}}/>
             <Stack.Screen name="Home"
                           component={Home}
+                          options={{headerShown: false}}/>
+            <Stack.Screen name="Profile"
+                          component={Profile}
+                          options={{headerShown: false}}/>
+            <Stack.Screen name="User"
+                          component={UserData}
                           options={{headerShown: false}}/>
         </Stack.Navigator>
     );
