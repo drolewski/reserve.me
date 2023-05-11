@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder(toBuilder = true)
 public class Account {
+    private String userName;
     private String phoneNumber;
     private String tmpPassword;
     private LocalDateTime passwordExpirationTime;

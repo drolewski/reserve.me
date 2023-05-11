@@ -33,6 +33,7 @@ public class UserService {
         log.info("Register user with phone number: [phoneNumber={}]", phoneNumber);
         userRepository.save(User.builder()
                 .account(Account.builder()
+                        .userName(registerRequest.getUserName())
                         .phoneNumber(phoneNumber)
                         .build())
                 .build());

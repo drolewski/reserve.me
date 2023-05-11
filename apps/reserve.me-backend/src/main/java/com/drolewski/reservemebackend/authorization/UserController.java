@@ -3,6 +3,7 @@ package com.drolewski.reservemebackend.authorization;
 import com.drolewski.reservemebackend.authorization.model.AuthorizationRequest;
 import com.drolewski.reservemebackend.authorization.model.LoginRequest;
 import com.drolewski.reservemebackend.authorization.model.RegisterRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,19 +19,19 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("register")
-    public ResponseEntity<Void> register(@RequestBody final RegisterRequest registerRequest) {
+    public ResponseEntity<Void> register(@RequestBody @Valid final RegisterRequest registerRequest) {
         userService.register(registerRequest);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("login")
-    public ResponseEntity<Void> login(@RequestBody final LoginRequest loginRequest) {
+    public ResponseEntity<Void> login(@RequestBody @Valid final LoginRequest loginRequest) {
         userService.login(loginRequest);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("authorize")
-    public ResponseEntity<Void> authorize(@RequestBody final AuthorizationRequest authorizationRequest) {
+    public ResponseEntity<Void> authorize(@RequestBody @Valid final AuthorizationRequest authorizationRequest) {
         userService.authorize(authorizationRequest);
         return ResponseEntity.ok().build();
     }
