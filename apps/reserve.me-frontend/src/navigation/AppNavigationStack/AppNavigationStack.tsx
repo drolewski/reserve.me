@@ -1,7 +1,7 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Welcome from '../../components/molecules/Welcome/Welcome';
 import Register from '../../components/molecules/Register/Register';
-import Home from '../../components/molecules/Home/Home';
+import MainAppNavigation from '../../components/molecules/MainAppNavigation/MainAppNavigation';
 import Login from '../../components/molecules/Login/Login';
 import Profile from '../../components/molecules/Profile/Profile';
 import UserData from '../../components/molecules/Profile/UserData/UserData';
@@ -21,7 +21,7 @@ const AppNavigationStack = () => {
                           component={Login}
                           options={{headerShown: false}}/>
             <Stack.Screen name="Home"
-                          component={Home}
+                          component={MainAppNavigation}
                           options={{headerShown: false}}/>
             <Stack.Screen name="Profile"
                           component={Profile}
