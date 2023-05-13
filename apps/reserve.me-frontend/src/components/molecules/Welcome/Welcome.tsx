@@ -1,5 +1,4 @@
 import {Button, Text, View} from 'react-native';
-import Settings from '../Profile/Profile';
 
 const Welcome = ({navigation}: any) => {
   return (
@@ -7,19 +6,15 @@ const Welcome = ({navigation}: any) => {
       <Text>Hello in Reserve.me! TODO</Text>
       <Button title="Register me" onPress={() => navigation.reset({
         index: 0,
-        routes: [{ name: 'Register' }],
+        routes: [{name: 'Register'}],
       })}/>
       <Button title="Login" onPress={() => navigation.reset({
         index: 0,
-        routes: [{ name: 'Login' }],
+        routes: [{name: 'Login'}],
       })}/>
-        <Button title="Home" onPress={() => navigation.reset({
+      <Button title="Home" onPress={() => navigation.reset({
         index: 0,
-        routes: [{ name: 'Home' }],
-      })}/>
-        <Button title="Profile" onPress={() => navigation.reset({
-        index: 0,
-        routes: [{ name: 'Profile' }],
+        routes: [{name: 'Home'}],
       })}/>
     </View>
   );

@@ -2,6 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import UserNavigatorStack from '../User/UserNavigatorStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -12,7 +13,7 @@ const MainAppNavigation = () => {
         tabBarIcon: ({color, size}) => (
           <MaterialCommunityIcons name="home" color={color} size={size}/>
         )
-      }} name="Home" component={Login}/>
+      }} name="Login" component={Login}/>
       <Tab.Screen options={{
         tabBarIcon: ({color, size}) => (
           <MaterialCommunityIcons name="magnify" color={color} size={size}/>
@@ -28,7 +29,7 @@ const MainAppNavigation = () => {
         tabBarIcon: ({color, size}) => (
           <MaterialCommunityIcons name="account" color={color} size={size}/>
         )
-      }} name="Settings" component={Register}/>
+      }} name="Settings" component={UserNavigatorStack}/>
     </Tab.Navigator>
   );
 };

@@ -39,7 +39,9 @@ export const authorize = (authorizationRequest: AuthorizationRequest) => {
     .catch(error => console.error(error))
 }
 
-const parseResponse = (response: Response) => {
+
+// TODO api call util
+export const parseResponse = (response: Response) => {
   console.log(response);
   if (response.status !== 200) {
     return response.json();

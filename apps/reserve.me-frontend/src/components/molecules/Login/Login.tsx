@@ -43,11 +43,11 @@ const Login = ({navigation}: any) => {
     const requestTime: string = (new Date()).toISOString();
     const authorizationRequest: AuthorizationRequest = {phoneNumber, authorizationCode, requestTime}
     authorize(authorizationRequest).then((response: ErrorResponse) => {
-      console.log(response);
       if (!!response) {
         setErrorText(response.message);
         return;
       }
+      // TODO save phone number into local store
       navigation.reset({index: 0, routes: [{name: 'Home'}]});
     });
   }

@@ -3,9 +3,7 @@ package com.drolewski.reservemebackend.authorization;
 import com.drolewski.reservemebackend.authorization.db.UserRepository;
 import com.drolewski.reservemebackend.authorization.db.model.Account;
 import com.drolewski.reservemebackend.authorization.db.model.User;
-import com.drolewski.reservemebackend.authorization.model.AuthorizationRequest;
-import com.drolewski.reservemebackend.authorization.model.LoginRequest;
-import com.drolewski.reservemebackend.authorization.model.RegisterRequest;
+import com.drolewski.reservemebackend.authorization.model.*;
 import com.drolewski.reservemebackend.authorization.token.AuthorizationTokenGenerator;
 import com.drolewski.reservemebackend.exception.ApiErrorCode;
 import com.drolewski.reservemebackend.exception.ApiRuntimeException;
@@ -17,6 +15,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 
 import static com.drolewski.reservemebackend.util.ApplicationConstants.TIME_ZONE;
 
@@ -72,6 +71,27 @@ public class UserService {
         userRepository.save(authorizedUser);
     }
 
+    UserResponse user(final String phoneNumber) {
+        log.info("Get user data by phone number: [phoneNumber={}]", phoneNumber);
+        final User user = userRepository.findFirstByAccount_PhoneNumber(phoneNumber);
+        return Optional.ofNullable(user)
+                .map(this::userResponse)
+                .orElse(UserResponse.builder().build());
+    }
+
+    void updateUser(final String phoneNumber, final UpdateUserRequest userRequest) {
+        log.info("Update user data by phone number: [phoneNumber={}]", phoneNumber);
+        final User user = userRepository.findFirstByAccount_PhoneNumber(phoneNumber);
+        final User.UserBuilder updatedUser = user.toBuilder();
+        if (userRequest.getAddress() != null) {
+            updatedUser.address(userRequest.getAddress());
+        }
+        if (userRequest.getProfile() != null) {
+            updatedUser.profile(userRequest.getProfile());
+        }
+        userRepository.save(updatedUser.build());
+    }
+
     private boolean validateAuthorization(final AuthorizationRequest authorizationRequest, final User user) {
         return validateToken(authorizationRequest, user) && validateExpirationTime(authorizationRequest, user);
     }
@@ -88,4 +108,12 @@ public class UserService {
         return Instant.now().atOffset(ZoneOffset.of(TIME_ZONE)).toLocalDateTime();
     }
 
+    private UserResponse userResponse(final User user) {
+        return UserResponse.builder()
+                .userName(user.getAccount().getUserName())
+                .phoneNumber(user.getAccount().getPhoneNumber())
+                .address(user.getAddress())
+                .profile(user.getProfile())
+                .build();
+    }
 }

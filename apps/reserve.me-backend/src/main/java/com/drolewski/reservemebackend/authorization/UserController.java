@@ -1,15 +1,10 @@
 package com.drolewski.reservemebackend.authorization;
 
-import com.drolewski.reservemebackend.authorization.model.AuthorizationRequest;
-import com.drolewski.reservemebackend.authorization.model.LoginRequest;
-import com.drolewski.reservemebackend.authorization.model.RegisterRequest;
+import com.drolewski.reservemebackend.authorization.model.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("user")
@@ -33,6 +28,18 @@ public class UserController {
     @PostMapping("authorize")
     public ResponseEntity<Void> authorize(@RequestBody @Valid final AuthorizationRequest authorizationRequest) {
         userService.authorize(authorizationRequest);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("{phoneNumber}")
+    public ResponseEntity<UserResponse> user(@PathVariable final String phoneNumber) {
+        return ResponseEntity.ok().body(userService.user(phoneNumber));
+    }
+
+    @PostMapping("{phoneNumber}")
+    public ResponseEntity<Void> updateUser(@PathVariable final String phoneNumber,
+                                           @RequestBody @Valid final UpdateUserRequest updateUserRequest) {
+        userService.updateUser(phoneNumber, updateUserRequest);
         return ResponseEntity.ok().build();
     }
 

@@ -1,6 +1,18 @@
-import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useEffect, useState} from 'react';
+import {UserDataResponse} from '../../../services/user/UserDataResponse';
+import {userApi} from '../../../services/user/UserService';
 
-const Profile = ({navigation}: any) => {
+const User = ({navigation}: any) => {
+
+  const [user, setUser] = useState<UserDataResponse>();
+
+  useEffect(() => {
+    // TODO get phoneNumber from store
+    userApi("1")
+      .then((response: UserDataResponse) => setUser(response))
+  }, []);
+
   return (
     <View style={{flex: 1}}>
       <ScrollView
@@ -9,22 +21,21 @@ const Profile = ({navigation}: any) => {
           alignContent: 'center',
           justifyContent: 'center'
         }}>
-        <Text style={styles.successTextStyle}>User Name</Text>
-        <Text style={styles.successTextStyle}>User number</Text>
-        <Image
-          style={styles.tinyLogo}
-          source={{
-            uri: 'https://reactnative.dev/img/tiny_logo.png',
-          }}
-        />
+        <Text style={styles.successTextStyle}>{user?.userName}</Text>
+        <Text style={styles.successTextStyle}>{user?.phoneNumber}</Text>
         <TouchableOpacity
           style={styles.buttonStyle}
           activeOpacity={0.5}
-          onPress={() => navigation.reset({
-            index: 0,
-            routes: [{name: 'UserData'}],
+          onPress={() => navigation.navigate('Profile', {
+            profile: {
+              name: "asdasd",
+              surname: "adsa",
+              sex: "string",
+              birthday: (new Date()).toISOString().substring(0, 10),
+            },
+            phoneNumber: "1"
           })}>
-          <Text style={styles.buttonTextStyle}>User data</Text>
+          <Text style={styles.buttonTextStyle}>Personal data</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonStyle}
@@ -35,30 +46,23 @@ const Profile = ({navigation}: any) => {
           })}>
           <Text style={styles.buttonTextStyle}>Address</Text>
         </TouchableOpacity>
+        {/* TODO opinion tab */}
         <TouchableOpacity
           style={styles.buttonStyle}
           activeOpacity={0.5}
           onPress={() => navigation.reset({
             index: 0,
-            routes: [{name: 'UserData'}],
+            routes: [{name: 'Address'}],
           })}>
           <Text style={styles.buttonTextStyle}>Opinion</Text>
         </TouchableOpacity>
+        {/* TODO remove from app session */}
         <TouchableOpacity
           style={styles.buttonStyle}
           activeOpacity={0.5}
           onPress={() => navigation.reset({
             index: 0,
-            routes: [{name: 'UserData'}],
-          })}>
-          <Text style={styles.buttonTextStyle}>Settings</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          activeOpacity={0.5}
-          onPress={() => navigation.reset({
-            index: 0,
-            routes: [{name: 'UserData'}],
+            routes: [{name: 'Address'}],
           })}>
           <Text style={styles.buttonTextStyle}>Logout</Text>
         </TouchableOpacity>
@@ -121,4 +125,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Profile;
+export default User;
