@@ -11,7 +11,7 @@ import java.time.OffsetDateTime;
 public class AuthorizationRequest {
     @Pattern(regexp = "^\\d+$", message = "Invalid phone number")
     private String phoneNumber;
-    @Pattern(regexp = "^\\d{6}$", message = "Invalid token")
-    private String token;
+    @Pattern(regexp = "^\\d{6}$", message = "Invalid authorization code")
+    private String authorizationCode;
     private OffsetDateTime requestTime;
 }

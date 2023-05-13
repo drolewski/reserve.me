@@ -81,7 +81,7 @@ public class UserService {
     }
 
     private boolean validateToken(final AuthorizationRequest authorizationRequest, final User user) {
-        return authorizationRequest.getToken().equals(user.getAccount().getTmpPassword());
+        return authorizationRequest.getAuthorizationCode().equals(user.getAccount().getTmpPassword());
     }
 
     private LocalDateTime currentDateTime() {
