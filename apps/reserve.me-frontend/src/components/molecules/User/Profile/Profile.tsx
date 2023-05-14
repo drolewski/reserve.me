@@ -2,7 +2,7 @@ import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, Touchable
 import {useEffect, useState} from 'react';
 import {updateUser} from '../../../../services/user/UserService';
 
-const Profile = ({route}: any) => {
+const Profile = ({route, navigation}: any) => {
 
   const {profile, phoneNumber} = route.params;
 
@@ -37,13 +37,12 @@ const Profile = ({route}: any) => {
           sex: newSex,
           birthday: date
         }
-      })
-        .then(response => {
-          if (!!response) {
-            setErrorText(response.message);
-            return;
-          }
-        })
+      }).then(response => {
+        if (!!response) {
+          setErrorText(response.message);
+          return;
+        }
+      });
     }
   }
 

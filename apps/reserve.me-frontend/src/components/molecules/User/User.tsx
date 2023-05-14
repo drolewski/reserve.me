@@ -10,9 +10,7 @@ const User = ({navigation}: any) => {
   useEffect(() => {
     // TODO get phoneNumber from store
     userApi("1")
-      .then((response: UserDataResponse) => {
-        setUser(response);
-      })
+      .then((response: UserDataResponse) => setUser(response))
   }, []);
 
   const getDate = (date: Date) => {
@@ -49,9 +47,14 @@ const User = ({navigation}: any) => {
         <TouchableOpacity
           style={styles.buttonStyle}
           activeOpacity={0.5}
-          onPress={() => navigation.reset({
-            index: 0,
-            routes: [{name: 'Address'}],
+          onPress={() => navigation.navigate('Address', {
+            address: {
+              street: user?.address?.street ?? '',
+              city: user?.address?.city ?? '',
+              postCode: user?.address?.postCode ?? '',
+              number: user?.address?.number ?? '',
+            },
+            phoneNumber: "1"
           })}>
           <Text style={styles.buttonTextStyle}>Address</Text>
         </TouchableOpacity>
