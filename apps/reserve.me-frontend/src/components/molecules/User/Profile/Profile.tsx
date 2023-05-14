@@ -29,13 +29,13 @@ const Profile = ({route}: any) => {
 
   const saveProfileData = () => {
     if (!!phoneNumber && (name !== newName || surname !== newSurname || sex !== newSex || birthday !== newBirthday)) {
-      console.log(newBirthday);
+      let date = new Date(Date.parse(newBirthday ?? ''));
       updateUser(phoneNumber, {
         profile: {
           name: newName,
           surname: newSurname,
           sex: newSex,
-          birthday: new Date(Date.parse(newBirthday ?? ''))
+          birthday: date
         }
       })
         .then(response => {

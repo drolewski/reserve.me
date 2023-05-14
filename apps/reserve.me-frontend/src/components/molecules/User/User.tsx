@@ -10,8 +10,17 @@ const User = ({navigation}: any) => {
   useEffect(() => {
     // TODO get phoneNumber from store
     userApi("1")
-      .then((response: UserDataResponse) => setUser(response))
+      .then((response: UserDataResponse) => {
+        setUser(response);
+      })
   }, []);
+
+  const getDate = (date: Date) => {
+    let resultDate = new Date(date);
+    const d = resultDate.getDate();
+    resultDate.setDate(d + 1);
+    return resultDate.toISOString().substring(0, 10);
+  }
 
   return (
     <View style={{flex: 1}}>
@@ -28,10 +37,10 @@ const User = ({navigation}: any) => {
           activeOpacity={0.5}
           onPress={() => navigation.navigate('Profile', {
             profile: {
-              name: "asdasd",
-              surname: "adsa",
-              sex: "string",
-              birthday: (new Date()).toISOString().substring(0, 10),
+              name: user?.profile?.name ?? '',
+              surname: user?.profile?.surname ?? '',
+              sex: user?.profile?.sex ?? '',
+              birthday: !!user?.profile?.birthday ? getDate(user?.profile?.birthday) : null,
             },
             phoneNumber: "1"
           })}>
