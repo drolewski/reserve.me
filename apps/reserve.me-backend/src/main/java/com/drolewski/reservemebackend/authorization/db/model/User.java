@@ -17,4 +17,5 @@ public class User {
     private Profile profile;
     private Account account;
     private Address address;
+    // TODO History
 }

@@ -1,0 +1,68 @@
+###
+POST http://localhost:8080/user/register
+Content-Type: application/json
+
+{
+  "phoneNumber": "123123124"
+}
+
+<> 2023-05-11T230217.400.json
+<> 2023-05-11T230204.500.json
+<> 2023-05-11T230020.400.json
+<> 2023-05-11T225824.400.json
+<> 2023-05-11T213808.500.json
+
+###
+POST http://localhost:8080/user/login
+Content-Type: application/json
+
+{
+  "phoneNumber": "123123124"
+}
+
+<> 2023-05-11T214113.500.json
+
+###
+POST http://localhost:8080/user/authorize
+Content-Type: application/json
+
+{
+  "phoneNumber": "123123124",
+  "token": "259462",
+  "requestTime": "2023-05-11T23:03:00+02:00"
+}
+
+<> 2023-05-11T230252.400.json
+<> 2023-05-11T215046.500.json
+<> 2023-05-11T215008.500.json
+<> 2023-05-11T214957.500.json
+<> 2023-05-11T213929.500.json
+<> 2023-05-11T213542.500.json
+<> 2023-05-11T213445.400.json
+<> 2023-05-11T213327.400.json
+<> 2023-05-11T213048.400.json
+<> 2023-05-11T213037.400.json
+<> 2023-05-11T212005.500.json
+<> 2023-05-11T211924.500.json
+<> 2023-05-11T211645.500.json
+
+###
+GET http://localhost:8080/user/1
+
+<> 2023-05-14T144530.200.json
+<> 2023-05-13T151745.200.json
+
+###
+POST http://localhost:8080/user/1
+Content-Type: application/json
+
+{
+  "profile": {
+    "name": "name",
+    "surname": "surname",
+    "sex": "sex",
+    "birthday": 1683993007
+  }
+}
+
+<> 2023-05-13T175517.500.json

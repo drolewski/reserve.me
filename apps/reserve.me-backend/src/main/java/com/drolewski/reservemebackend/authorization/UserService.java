@@ -1,6 +1,6 @@
 package com.drolewski.reservemebackend.authorization;
 
-import com.drolewski.reservemebackend.authorization.db.UserRepository;
+import com.drolewski.reservemebackend.authorization.db.model.UserRepository;
 import com.drolewski.reservemebackend.authorization.db.model.Account;
 import com.drolewski.reservemebackend.authorization.db.model.User;
 import com.drolewski.reservemebackend.authorization.model.*;
