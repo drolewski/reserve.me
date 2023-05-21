@@ -1,6 +1,6 @@
 package com.drolewski.reservemebackend.company.db;
 
-public enum WeekDays {
+public enum WeekDay {
     MONDAY,
     TUESDAY,
     WEDNESDAY,

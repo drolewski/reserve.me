@@ -20,6 +20,7 @@ public class CompanyService {
         return userCompanies.stream()
                 .map(company -> CompanyListResponse.builder()
                         .address(company.getAddress())
+                        .category(company.getCategory())
                         .contact(company.getContact())
                         .name(company.getName())
                         .build())
@@ -30,6 +31,7 @@ public class CompanyService {
         companyRepository.save(
                 Company.builder()
                         .ownerId(companyRequest.getOwnerId())
+                        .category(companyRequest.getCategory())
                         .address(companyRequest.getAddress())
                         .description(companyRequest.getDescription())
                         .contact(companyRequest.getContact())
@@ -71,6 +73,10 @@ public class CompanyService {
             company.toBuilder()
                     .address(companyRequest.getAddress());
         }
+        if (companyRequest.getCategory() != null) {
+            company.toBuilder()
+                    .category(companyRequest.getCategory());
+        }
         companyRepository.save(company);
     }
 
@@ -78,12 +84,16 @@ public class CompanyService {
         final Company company = companyRepository.findFirstByOwnerIdAndName(phoneNumber, companyName);
         return CompanyResponse.builder()
                 .name(company.getName())
+                .category(company.getCategory())
                 .description(company.getDescription())
                 .openingHours(company.getOpeningHours())
                 .contact(company.getContact())
                 .employees(company.getEmployees())
                 .address(company.getAddress())
                 .opinions(company.getOpinions())
+                .services(company.getServices())
+                .opinions(company.getOpinions())
+                .category(company.getCategory())
                 .build();
     }
 

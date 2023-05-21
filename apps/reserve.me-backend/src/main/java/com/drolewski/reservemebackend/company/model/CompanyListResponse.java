@@ -7,12 +7,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class CompanyListResponse {
     private String name;
+    private List<String> category;
     private Contact contact;
     private Address address;
 }

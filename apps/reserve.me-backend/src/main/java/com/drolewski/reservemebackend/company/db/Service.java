@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigInteger;
-import java.time.OffsetTime;
 import java.util.List;
 
 @Getter
@@ -14,8 +13,7 @@ import java.util.List;
 public class Service {
     private String name;
     private BigInteger price;
-    private OffsetTime startTime;
-    private OffsetTime endTime;
-    private List<WeekDays> weekDays;
+    private BigInteger serviceTime;
+    private List<WeekDay> weekDays;
     private List<String> employees;
 }

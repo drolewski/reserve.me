@@ -16,8 +16,9 @@ import java.util.Map;
 @NoArgsConstructor
 public class CompanyResponse {
     private String name;
+    private List<String> category;
     private String description;
-    private Map<WeekDays, OpeningHours> openingHours;
+    private List<OpeningHours> openingHours;
     private Contact contact;
     private List<String> employees;
     private List<Service> services;
