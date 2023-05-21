@@ -23,16 +23,12 @@ const Search = ({navigation}: any) => {
   }, []);
 
   useEffect(() => {
-    let companiesResult: CompanyListResponse[] = [];
+    let companiesResult: CompanyListResponse[] = companies;
     if (!!searchCategory) {
-      companiesResult = companies.filter(company => company.category.includes(searchCategory.name));
+      companiesResult = companiesResult.filter(company => company.category.includes(searchCategory.name));
     }
     if (!!searchValue) {
-      if (companiesResult.length > 0) {
-        companiesResult = companiesResult.filter(company => company.name.includes(searchValue));
-      } else {
-        companiesResult = companies.filter(company => company.name.includes(searchValue));
-      }
+      companiesResult = companiesResult.filter(company => company.name.toLowerCase().includes(searchValue.toLowerCase()));
     }
     setDisplayCompanies(companiesResult);
   }, [searchValue, searchCategory]);
