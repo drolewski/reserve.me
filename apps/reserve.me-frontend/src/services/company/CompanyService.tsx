@@ -24,3 +24,9 @@ export const saveCompanyApiCall = (companyRequest: CompanyRequest) => {
   }).then(parseResponse)
     .catch(console.log)
 }
+
+export const getAllCompanies = () => {
+  return fetch(`http://localhost:8080/company`)
+    .then(response => response.json())
+    .catch(error => console.log(error))
+}

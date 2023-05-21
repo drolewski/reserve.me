@@ -90,15 +90,24 @@ public class CompanyService {
                 .contact(company.getContact())
                 .employees(company.getEmployees())
                 .address(company.getAddress())
-                .opinions(company.getOpinions())
                 .services(company.getServices())
-                .opinions(company.getOpinions())
                 .category(company.getCategory())
                 .build();
     }
 
     public void deleteCompany(final String phoneNumber, final String companyName) {
         companyRepository.deleteByOwnerIdAndName(phoneNumber, companyName);
+    }
+
+    public List<CompanyListResponse> getAllCompanies() {
+        return companyRepository.findAll().stream()
+                .map(company -> CompanyListResponse.builder()
+                        .category(company.getCategory())
+                        .contact(company.getContact())
+                        .name(company.getName())
+                        .address(company.getAddress())
+                        .build())
+                .toList();
     }
 
 }

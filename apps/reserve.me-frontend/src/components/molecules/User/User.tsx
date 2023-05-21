@@ -58,7 +58,7 @@ const User = ({navigation}: any) => {
           })}>
           <Text style={styles.buttonTextStyle}>Address</Text>
         </TouchableOpacity>
-        {/* TODO opinion tab */}
+        {/* TODO history tab */}
         <TouchableOpacity
           style={styles.buttonStyle}
           activeOpacity={0.5}
@@ -66,7 +66,7 @@ const User = ({navigation}: any) => {
             index: 0,
             routes: [{name: 'Address'}],
           })}>
-          <Text style={styles.buttonTextStyle}>Opinion</Text>
+          <Text style={styles.buttonTextStyle}>History</Text>
         </TouchableOpacity>
         {/* TODO remove from app session */}
         <TouchableOpacity

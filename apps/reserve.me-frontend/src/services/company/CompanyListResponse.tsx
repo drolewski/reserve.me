@@ -2,6 +2,7 @@ export interface CompanyListResponse {
   name: string;
   contact: Contact;
   address: Address;
+  category: string[];
 }
 
 export interface Contact {

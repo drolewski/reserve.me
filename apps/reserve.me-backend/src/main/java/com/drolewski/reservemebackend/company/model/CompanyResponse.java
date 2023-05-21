@@ -23,5 +23,4 @@ public class CompanyResponse {
     private List<String> employees;
     private List<Service> services;
     private Address address;
-    private List<Opinion> opinions;
 }

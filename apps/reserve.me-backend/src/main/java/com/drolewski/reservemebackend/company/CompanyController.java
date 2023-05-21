@@ -44,4 +44,9 @@ public class CompanyController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping
+    public ResponseEntity<List<CompanyListResponse>> getAllCompanies() {
+        return ResponseEntity.ok(companyService.getAllCompanies());
+    }
+
 }

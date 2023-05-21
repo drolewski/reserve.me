@@ -4,6 +4,7 @@ import Login from '../Login/Login';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import UserNavigatorStack from '../User/UserNavigatorStack';
 import CompanyNavigatorStack from '../Company/CompanyNavigatorStack';
+import SearchNavigationStack from '../Search/SearchNavigationStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,7 +20,7 @@ const MainAppNavigation = () => {
         tabBarIcon: ({color, size}) => (
           <MaterialCommunityIcons name="magnify" color={color} size={size}/>
         )
-      }} name="Search" component={Register}/>
+      }} name="SearchStack" component={SearchNavigationStack}/>
       {/* TOOD condition */}
       <Tab.Screen options={{
         tabBarIcon: ({color, size}) => (
