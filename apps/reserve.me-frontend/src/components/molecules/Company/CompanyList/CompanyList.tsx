@@ -1,4 +1,12 @@
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  TouchableOpacity,
+  View
+} from 'react-native';
 import {useEffect, useState} from 'react';
 import {getCompanyList} from '../../../../services/company/CompanyService';
 import {CompanyListResponse} from '../../../../services/company/CompanyListResponse';
@@ -15,11 +23,47 @@ const CompanyList = ({navigation}: any) => {
   if (companies.length === 0) {
     return <View style={{flex: 1}}>
       <Text style={styles.successTextStyle}>You don't have company yet</Text>
-      <Button title="Add company" onPress={() => navigation.navigate('CompanyName')}/>
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        activeOpacity={0.5}
+        onPress={() => navigation.navigate('CompanyName')}>
+        <Text style={styles.buttonTextStyle}>Add company</Text>
+      </TouchableOpacity>
     </View>
   }
 
-  return <Text>Test</Text>
+  const updateCompany = (companyName: string) => {
+    // TODO handle update company
+    console.log("TODO Handle Update company");
+  }
+
+  return <View style={{flex: 1}}>
+    {/* TODO Loader */}
+    <ScrollView keyboardShouldPersistTaps="handled"
+                contentContainerStyle={{
+                  alignContent: 'center',
+                  justifyContent: 'center'
+                }}>
+      <KeyboardAvoidingView enabled>
+        {
+          companies.map(company =>
+            <TouchableHighlight key={company.name} onPress={() => updateCompany(company.name)}>
+              <View style={styles.timeSectionStyle}>
+                <Text>{company.name}</Text>
+                <Text>{company.contact.phoneNumber}</Text>
+                <Text>{company.contact.email}</Text>
+              </View>
+            </TouchableHighlight>)
+        }
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          activeOpacity={0.5}
+          onPress={() => navigation.navigate('CompanyName')}>
+          <Text style={styles.buttonTextStyle}>Add company</Text>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
+    </ScrollView>
+  </View>
 
 }
 
@@ -40,6 +84,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 30,
     borderColor: '#dadae8',
+  },
+  timeSectionStyle: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: 20,
+    marginLeft: 35,
+    marginRight: 35,
+    margin: 10
   },
   buttonStyle: {
     backgroundColor: '#8b9cb5',
