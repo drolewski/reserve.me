@@ -1,27 +1,25 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Register from '../Register/Register';
-import Login from '../Login/Login';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import UserNavigatorStack from '../User/UserNavigatorStack';
 import CompanyNavigatorStack from '../Company/CompanyNavigatorStack';
 import SearchNavigationStack from '../Search/SearchNavigationStack';
+import HomeNavigationStack from '../Home/HomeNavigationStack';
 
 const Tab = createBottomTabNavigator();
 
 const MainAppNavigation = () => {
   return (
-    <Tab.Navigator screenOptions={{headerShown: false}} initialRouteName="Home">
+    <Tab.Navigator screenOptions={{headerShown: false}} initialRouteName="HomeNavigationStack">
       <Tab.Screen options={{
         tabBarIcon: ({color, size}) => (
           <MaterialCommunityIcons name="home" color={color} size={size}/>
         )
-      }} name="Login" component={Login}/>
+      }} name="HomeNavigationStack" component={HomeNavigationStack}/>
       <Tab.Screen options={{
         tabBarIcon: ({color, size}) => (
           <MaterialCommunityIcons name="magnify" color={color} size={size}/>
         )
       }} name="SearchStack" component={SearchNavigationStack}/>
-      {/* TOOD condition */}
       <Tab.Screen options={{
         tabBarIcon: ({color, size}) => (
           <MaterialCommunityIcons name="plus" color={color} size={size}/>
