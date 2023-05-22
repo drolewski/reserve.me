@@ -30,3 +30,9 @@ export const getAllCompanies = () => {
     .then(response => response.json())
     .catch(error => console.log(error))
 }
+
+export const getCompany = (companyName: string) => {
+  return fetch(`http://localhost:8080/company/name/${companyName}`)
+    .then(response => response.json())
+    .catch(error => console.log(error))
+}

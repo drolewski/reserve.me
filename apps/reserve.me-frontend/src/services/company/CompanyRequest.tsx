@@ -5,7 +5,6 @@ export interface CompanyRequest {
   category: string[];
   address: AddressRequest;
   contact: ContactRequest;
-  employees: string[];
   services: ServiceRequest[]
   openingHours: OpeningHours[];
 }
@@ -27,7 +26,6 @@ export interface ServiceRequest {
   price: number;
   serviceTime: number;
   weekDays: WeekDay[];
-  employees: string[]
 }
 
 export enum WeekDay {

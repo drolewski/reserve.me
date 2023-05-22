@@ -24,7 +24,6 @@ public class Company {
     private String description;
     private List<OpeningHours> openingHours;
     private Contact contact;
-    private List<String> employees;
     private List<Service> services;
     private Address address;
 }

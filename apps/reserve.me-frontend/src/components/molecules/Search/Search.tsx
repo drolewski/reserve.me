@@ -72,7 +72,7 @@ const Search = ({navigation}: any) => {
           <TouchableOpacity
             key={company.name}
             activeOpacity={0.5}
-            onPress={() => navigation.navigate('SearchCompanyDetails')}>
+            onPress={() => navigation.navigate('SearchCompanyDetails', {companyName: company.name})}>
             <View style={styles.serviceCategorySectionStyle}>
               <Text>{company.name}</Text>
               <Text>{company.contact.phoneNumber}</Text>

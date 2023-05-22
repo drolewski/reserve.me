@@ -49,4 +49,9 @@ public class CompanyController {
         return ResponseEntity.ok(companyService.getAllCompanies());
     }
 
+    @GetMapping("name/{companyName}")
+    public ResponseEntity<CompanyResponse> getCompanyByName( @PathVariable final String companyName) {
+        return ResponseEntity.ok(companyService.getCompanyByName(companyName));
+    }
+
 }

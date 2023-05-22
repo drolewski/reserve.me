@@ -15,5 +15,4 @@ public class Service {
     private BigInteger price;
     private BigInteger serviceTime;
     private List<WeekDay> weekDays;
-    private List<String> employees;
 }

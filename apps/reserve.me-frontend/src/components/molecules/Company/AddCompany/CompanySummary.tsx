@@ -6,7 +6,7 @@ import {useState} from 'react';
 const CompanySummary = ({route, navigation}: any) => {
 
   const {
-    name, description, category, email, phoneNumber, street, city, number, postCode, employees,
+    name, description, category, email, phoneNumber, street, city, number, postCode,
     openingHours, services
   } = route.params;
 
@@ -25,7 +25,6 @@ const CompanySummary = ({route, navigation}: any) => {
       contact: {
         email, phoneNumber
       },
-      employees,
       services,
       openingHours
     };
@@ -76,7 +75,6 @@ const CompanySummary = ({route, navigation}: any) => {
             <Text style={styles.dropdownTextStyle}>Price: {service.price}</Text>
             <Text style={styles.dropdownTextStyle}>Service time: {service.serviceTime}</Text>
             <Text style={styles.dropdownTextStyle}>Working days:{service.weekDays.join(", ")}</Text>
-            <Text style={styles.dropdownTextStyle}>Employees: {service.employees.join(", ")}</Text>
           </View>)}
         {errorText !== '' ? (
           <Text style={styles.errorTextStyle}>

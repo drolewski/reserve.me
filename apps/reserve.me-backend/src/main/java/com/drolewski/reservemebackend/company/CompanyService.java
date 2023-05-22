@@ -35,7 +35,6 @@ public class CompanyService {
                         .address(companyRequest.getAddress())
                         .description(companyRequest.getDescription())
                         .contact(companyRequest.getContact())
-                        .employees(companyRequest.getEmployees())
                         .services(companyRequest.getServices())
                         .name(companyRequest.getName())
                         .openingHours(companyRequest.getOpeningHours())
@@ -61,10 +60,6 @@ public class CompanyService {
             company.toBuilder()
                     .contact(companyRequest.getContact());
         }
-        if (companyRequest.getEmployees() != null) {
-            company.toBuilder()
-                    .employees(companyRequest.getEmployees());
-        }
         if (companyRequest.getServices() != null) {
             company.toBuilder()
                     .services(companyRequest.getServices());
@@ -88,7 +83,6 @@ public class CompanyService {
                 .description(company.getDescription())
                 .openingHours(company.getOpeningHours())
                 .contact(company.getContact())
-                .employees(company.getEmployees())
                 .address(company.getAddress())
                 .services(company.getServices())
                 .category(company.getCategory())
@@ -110,4 +104,17 @@ public class CompanyService {
                 .toList();
     }
 
+    public CompanyResponse getCompanyByName(final String companyName) {
+        final Company company = companyRepository.findFirstByName(companyName);
+        return CompanyResponse.builder()
+                .name(company.getName())
+                .category(company.getCategory())
+                .description(company.getDescription())
+                .openingHours(company.getOpeningHours())
+                .contact(company.getContact())
+                .address(company.getAddress())
+                .services(company.getServices())
+                .category(company.getCategory())
+                .build();
+    }
 }

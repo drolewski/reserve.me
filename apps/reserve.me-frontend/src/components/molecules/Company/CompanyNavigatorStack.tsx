@@ -2,7 +2,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import CompanyList from './CompanyList/CompanyList';
 import CompanyName from './AddCompany/CompanyName';
 import CompanyTimetable from './AddCompany/CompanyTimetable';
-import CompanyEmployee from './AddCompany/CompanyEmployee';
 import CompanyContact from './AddCompany/CompanyContact';
 import CompanyCategory from './AddCompany/CompanyCategory';
 import CompanySummary from './AddCompany/CompanySummary';
@@ -20,9 +19,6 @@ const CompanyNavigatorStack = () => {
                   options={{headerShown: false}}/>
     <Stack.Screen name="CompanyTimetable"
                   component={CompanyTimetable}
-                  options={{headerShown: false}}/>
-    <Stack.Screen name="CompanyEmployee"
-                  component={CompanyEmployee}
                   options={{headerShown: false}}/>
     <Stack.Screen name="CompanyContact"
                   component={CompanyContact}

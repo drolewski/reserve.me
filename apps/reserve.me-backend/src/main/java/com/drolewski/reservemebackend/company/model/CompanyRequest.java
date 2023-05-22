@@ -25,7 +25,6 @@ public class CompanyRequest {
     private List<String> category;
     private Address address;
     private Contact contact;
-    private List<String> employees;
     private List<OpeningHours> openingHours;
     private List<Service> services;
 

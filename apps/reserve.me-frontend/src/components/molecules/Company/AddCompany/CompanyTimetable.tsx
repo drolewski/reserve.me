@@ -14,7 +14,7 @@ import {WeekDay} from '../../../../services/company/CompanyRequest';
 const CompanyTimetable = ({route, navigation}: any) => {
 
 
-  const {name, description, category, email, phoneNumber, street, city, number, postCode, employees} = route.params;
+  const {name, description, category, email, phoneNumber, street, city, number, postCode} = route.params;
 
   const [isMonday, setIsMonday] = useState<boolean>(false);
   const [mondayOpen, setMondayOpen] = useState<string>();
@@ -75,7 +75,7 @@ const CompanyTimetable = ({route, navigation}: any) => {
       return;
     }
     navigation.navigate("CompanyService", {
-      name, description, category, email, phoneNumber, street, city, number, postCode, employees,
+      name, description, category, email, phoneNumber, street, city, number, postCode,
       openingHours: [
         {
           weekDay: WeekDay.MONDAY,

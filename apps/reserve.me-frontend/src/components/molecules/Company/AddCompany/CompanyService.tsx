@@ -17,7 +17,6 @@ const CompanyService = ({route, navigation}: any) => {
   const [serviceEmployees, setServiceEmployees] = useState<string[]>([]);
   const [uniqueKey, setUniqueKey] = useState<number>(0);
 
-  const [employeesData, setEmployeesData] = useState<{ key: string, value: string }[]>([]);
   const [weekDaysData, setWeekDaysData] = useState<{ key: string, value: WeekDay }[]>([]);
   const [errorText, setErrorText] = useState<string>("");
   const [globalErrorText, setGlobalErrorText] = useState<string>("");
@@ -29,9 +28,6 @@ const CompanyService = ({route, navigation}: any) => {
   const serviceTimeRef = createRef();
 
   useEffect(() => {
-    const employeesMappedData = employees.map((emp: string) => {
-      return {key: emp, value: emp}
-    })
     const weekDayMappedData = [];
     if (!!openingHours[0].open) {
       weekDayMappedData.push({key: 'Monday', value: WeekDay.MONDAY});
@@ -55,7 +51,6 @@ const CompanyService = ({route, navigation}: any) => {
       weekDayMappedData.push({key: 'Sunday', value: WeekDay.SUNDAY});
     }
     setWeekDaysData(weekDayMappedData);
-    setEmployeesData(employeesMappedData);
   }, []);
 
   const addService = () => {
@@ -101,7 +96,7 @@ const CompanyService = ({route, navigation}: any) => {
       return;
     }
     navigation.navigate("CompanySummary", {
-      name, description, category, email, phoneNumber, street, city, number, postCode, employees,
+      name, description, category, email, phoneNumber, street, city, number, postCode,
       openingHours, services
     });
   }
@@ -176,15 +171,6 @@ const CompanyService = ({route, navigation}: any) => {
                 dropdownTextStyles={styles.dropdownTextStyle}
                 setSelected={(weekDay: any) => setWeekDays(weekDay)}
                 data={weekDaysData}
-                save="value"
-              />
-            </View>
-            <View style={styles.serviceCategorySectionStyle}>
-              <MultipleSelectList
-                boxStyles={styles.dropdownInputStyle}
-                dropdownTextStyles={styles.dropdownTextStyle}
-                setSelected={(employee: any) => setServiceEmployees(employee)}
-                data={employeesData}
                 save="value"
               />
             </View>

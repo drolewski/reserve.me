@@ -49,7 +49,7 @@ const CompanyContact = ({route, navigation}: any) => {
       setErrorText('Set company post code');
       return;
     }
-    navigation.navigate("CompanyEmployee", {
+    navigation.navigate("CompanyTimetable", {
       name, description, category, email, phoneNumber, street, city, number, postCode
     });
   }
