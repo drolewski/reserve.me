@@ -46,10 +46,10 @@ const SearchCompanyDetails = ({route, navigation}: any) => {
 
   const isReserved = (date: Date, time: string) => {
     if (!!reservationData && !!reservationData.reserved) {
-      reservationData.reserved.filter(reserve => {
-        console.log(`${reserve.start[0]}:${reserve.start[1]}`);
-        return reserve.date.getDate() === date.getDate() && time === `${reserve.start[0]}:${reserve.start[1]}`;
+      const result = reservationData.reserved.filter(reserve => {
+        return reserve.date[2] === date.getDate() && time === `${reserve.start[0]}:${parseMinutes(reserve.start[1])}`;
       })
+      return result.length > 0;
     }
     return false;
   }
@@ -81,12 +81,12 @@ const SearchCompanyDetails = ({route, navigation}: any) => {
 
       const hours: string[] = [];
       for (let i = openMinutes; i < closeMinutes; i += 15) {
-        const hour = `${Math.floor(i / 60)}:${i % 60}`;
+        const hour = `${Math.floor(i / 60)}:${parseMinutes(i)}`;
         hours.push(hour);
       }
 
       return (
-        <View key={date.toLocaleDateString()} style={styles.sectionStyle}>
+        <View key={date.toDateString()} style={styles.sectionStyle}>
           <Text>{openingHour.weekDay}</Text>
           <Text>{date.toLocaleDateString()}</Text>
           {hours.length > 0 ?
@@ -98,6 +98,7 @@ const SearchCompanyDetails = ({route, navigation}: any) => {
                                            services: companyData?.services,
                                            hour: hour,
                                            date: date,
+                                           companyName: companyData?.name
                                          })}>
                   <Text style={styles.buttonTextStyle}>{hour}</Text>
                 </TouchableOpacity>
@@ -106,6 +107,10 @@ const SearchCompanyDetails = ({route, navigation}: any) => {
         </View>
       );
     });
+  }
+
+  const parseMinutes = (minutes: number) => {
+    return minutes % 60 < 10 ? `0${minutes % 60}` : `${minutes % 60}`
   }
 
   return <View style={{flex: 1}}>
