@@ -10,13 +10,16 @@ import {
 import {useEffect, useState} from 'react';
 import {getCompanyList} from '../../../../services/company/CompanyService';
 import {CompanyListResponse} from '../../../../services/company/CompanyListResponse';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CompanyList = ({navigation}: any) => {
 
   const [companies, setCompanies] = useState<CompanyListResponse[]>([]);
+  const [storedPhoneNumber, setStoredPhoneNumber] = useState<string>("");
 
   useEffect(() => {
-    getCompanyList("1")
+    AsyncStorage.getItem('@userPhoneNumber').then(r => setStoredPhoneNumber(r));
+    getCompanyList(storedPhoneNumber)
       .then((response: CompanyListResponse[]) => setCompanies(response))
   }, []);
 

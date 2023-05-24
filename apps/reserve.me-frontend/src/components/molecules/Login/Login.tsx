@@ -1,9 +1,10 @@
-import {ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {useState} from 'react';
 import {LoginRequest} from '../../../services/authorization/LoginRequest';
 import {authorize, login} from '../../../services/authorization/AuthorizationService';
 import {ErrorResponse} from '../../../services/error/ErrorResponse';
 import {AuthorizationRequest} from '../../../services/authorization/AuthorizationRequest';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({navigation}: any) => {
 
@@ -47,7 +48,7 @@ const Login = ({navigation}: any) => {
         setErrorText(response.message);
         return;
       }
-      // TODO save phone number into local store
+      AsyncStorage.setItem('@userPhoneNumber', phoneNumber).then(() => console.warn("Done"));
       navigation.reset({index: 0, routes: [{name: 'Home'}]});
     });
   }
@@ -58,32 +59,38 @@ const Login = ({navigation}: any) => {
         style={{
           flex: 1,
         }}>
-        <ScrollView>
-          <View style={styles.sectionStyle}>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(authorizationCode) => setAuthorizationCode(authorizationCode)}
-              placeholder="Enter authorization code"
-              placeholderTextColor="#8b9cb5"
-              keyboardType="number-pad"
-              inputMode="numeric"
-              textContentType="oneTimeCode"
-              returnKeyType="next"
-              value={authorizationCode}
-              blurOnSubmit={false}
-            />
-          </View>
-          {errorText !== '' ? (
-            <Text style={styles.errorTextStyle}>
-              {errorText}
-            </Text>
-          ) : null}
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            activeOpacity={0.5}
-            onPress={() => handleAuthorization()}>
-            <Text style={styles.buttonTextStyle}>Confirm</Text>
-          </TouchableOpacity>
+        <ScrollView keyboardShouldPersistTaps="handled"
+                    contentContainerStyle={{
+                      alignContent: 'center',
+                      justifyContent: 'center'
+                    }}>
+          <KeyboardAvoidingView enabled>
+            <View style={styles.sectionStyle}>
+              <TextInput
+                style={styles.inputStyle}
+                onChangeText={(authorizationCode) => setAuthorizationCode(authorizationCode)}
+                placeholder="Enter authorization code"
+                placeholderTextColor="#8b9cb5"
+                keyboardType="number-pad"
+                inputMode="numeric"
+                textContentType="oneTimeCode"
+                returnKeyType="next"
+                value={authorizationCode}
+                blurOnSubmit={false}
+              />
+            </View>
+            {errorText !== '' ? (
+              <Text style={styles.errorTextStyle}>
+                {errorText}
+              </Text>
+            ) : null}
+            <TouchableOpacity
+              style={styles.buttonStyle}
+              activeOpacity={0.5}
+              onPress={() => handleAuthorization()}>
+              <Text style={styles.buttonTextStyle}>Confirm</Text>
+            </TouchableOpacity>
+          </KeyboardAvoidingView>
         </ScrollView>
       </View>
     );

@@ -2,7 +2,7 @@ import {ReservationRequest} from './ReservationRequest';
 import {parseResponse} from '../authorization/AuthorizationService';
 
 export const getCompanyReservation = (companyName: string) => {
-  return fetch(`http://localhost:8080/reservation/${companyName}`)
+  return fetch(`http://localhost:8080/reservation/companyName/${companyName}`)
     .then(response => response.json())
     .catch(error => console.log(error))
 }

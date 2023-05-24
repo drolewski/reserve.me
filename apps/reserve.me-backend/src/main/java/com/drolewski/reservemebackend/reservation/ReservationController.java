@@ -16,7 +16,7 @@ public class ReservationController {
 
     private final ReservationService reservationService;
 
-    @GetMapping("{companyName}")
+    @GetMapping("/companyName/{companyName}")
     public ResponseEntity<ReservationListResponse> getCompanyReservation(@PathVariable final String companyName) {
         return ResponseEntity.ok(reservationService.getCompanyReservation(companyName));
     }

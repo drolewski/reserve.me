@@ -1,9 +1,8 @@
-import {Button, Text, View} from 'react-native';
+import {Button, View} from 'react-native';
 
 const Welcome = ({navigation}: any) => {
   return (
     <View>
-      <Text>Hello in Reserve.me! TODO</Text>
       <Button title="Register me" onPress={() => navigation.reset({
         index: 0,
         routes: [{name: 'Register'}],

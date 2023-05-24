@@ -1,7 +1,8 @@
 import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {saveCompanyApiCall} from '../../../../services/company/CompanyService';
 import {ErrorResponse} from '../../../../services/error/ErrorResponse';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CompanySummary = ({route, navigation}: any) => {
 
@@ -12,10 +13,15 @@ const CompanySummary = ({route, navigation}: any) => {
 
 
   const [errorText, setErrorText] = useState<string>("");
+  const [storedPhoneNumber, setStoredPhoneNumber] = useState<string>("");
+
+  useEffect(() => {
+    AsyncStorage.getItem('@userPhoneNumber').then(r => setStoredPhoneNumber(r));
+  }, []);
 
   const saveCompany = () => {
     const companyRequest = {
-      ownerId: "1", // TODO get from store
+      ownerId: storedPhoneNumber,
       name,
       description,
       category,
@@ -28,7 +34,6 @@ const CompanySummary = ({route, navigation}: any) => {
       services,
       openingHours
     };
-    console.log(companyRequest);
     saveCompanyApiCall(companyRequest)
       .then((response: ErrorResponse) => {
         if (!!response) {
@@ -51,7 +56,7 @@ const CompanySummary = ({route, navigation}: any) => {
                 }}>
       <KeyboardAvoidingView enabled>
         <View style={styles.timeSectionStyle}>
-          <Text style={styles.successTextStyle}>{"1"}</Text>
+          <Text style={styles.successTextStyle}>{storedPhoneNumber}</Text>
           <Text style={styles.successTextStyle}>{name}</Text>
           <Text style={styles.successTextStyle}>{description}</Text>
           <Text style={styles.successTextStyle}>{category}</Text>
@@ -61,7 +66,6 @@ const CompanySummary = ({route, navigation}: any) => {
           <Text style={styles.successTextStyle}>{city}</Text>
           <Text style={styles.successTextStyle}>{email}</Text>
           <Text style={styles.successTextStyle}>{phoneNumber}</Text>
-          <Text style={styles.successTextStyle}>{employees.join(", ")}</Text>
         </View>
         {openingHours.map((openingHour: any) =>
           <View key={openingHour.weekDay} style={styles.timeSectionStyle}>

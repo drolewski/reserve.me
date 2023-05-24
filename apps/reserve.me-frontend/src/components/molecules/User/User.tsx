@@ -2,14 +2,16 @@ import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native
 import {useEffect, useState} from 'react';
 import {UserDataResponse} from '../../../services/user/UserDataResponse';
 import {userApi} from '../../../services/user/UserService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const User = ({navigation}: any) => {
 
   const [user, setUser] = useState<UserDataResponse>();
+  const [storedPhoneNumber, setStoredPhoneNumber] = useState<string>("");
 
   useEffect(() => {
-    // TODO get phoneNumber from store
-    userApi("1")
+    AsyncStorage.getItem('@userPhoneNumber').then(r => setStoredPhoneNumber(r));
+    userApi(storedPhoneNumber)
       .then((response: UserDataResponse) => setUser(response))
   }, []);
 
@@ -40,7 +42,7 @@ const User = ({navigation}: any) => {
               sex: user?.profile?.sex ?? '',
               birthday: !!user?.profile?.birthday ? getDate(user?.profile?.birthday) : null,
             },
-            phoneNumber: "1"
+            phoneNumber: storedPhoneNumber
           })}>
           <Text style={styles.buttonTextStyle}>Personal data</Text>
         </TouchableOpacity>
@@ -54,7 +56,7 @@ const User = ({navigation}: any) => {
               postCode: user?.address?.postCode ?? '',
               number: user?.address?.number ?? '',
             },
-            phoneNumber: "1"
+            phoneNumber: storedPhoneNumber
           })}>
           <Text style={styles.buttonTextStyle}>Address</Text>
         </TouchableOpacity>

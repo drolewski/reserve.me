@@ -3,6 +3,7 @@ import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TouchableOpacity, Vi
 import {SelectList} from 'react-native-dropdown-select-list/index';
 import {reserveApi} from '../../../services/reservation/ReservationService';
 import {ErrorResponse} from '../../../services/error/ErrorResponse';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Reservation = ({route, navigation}: any) => {
 
@@ -11,8 +12,10 @@ const Reservation = ({route, navigation}: any) => {
   const [servicesData, setServicesData] = useState<{ key: number, value: string }[]>([]);
   const [pickedService, setPickedService] = useState<number>();
   const [errorText, setErrorText] = useState<string>("");
+  const [storedPhoneNumber, setStoredPhoneNumber] = useState<string>("");
 
   useEffect(() => {
+    AsyncStorage.getItem('@userPhoneNumber').then(r => setStoredPhoneNumber(r));
     const servicesDataTmp = [];
     for (let i = 0; i < services.length; i++) {
       servicesDataTmp.push({key: i, value: `${services[i].name} (${services[i].price})`})
@@ -29,7 +32,7 @@ const Reservation = ({route, navigation}: any) => {
     }
     const reservationRequest = {
       companyName, reserved: {
-        ownerPhoneNumber: "1",
+        ownerPhoneNumber: storedPhoneNumber,
         date, start: hour, serviceName: services[pickedService].name
       }
     }
