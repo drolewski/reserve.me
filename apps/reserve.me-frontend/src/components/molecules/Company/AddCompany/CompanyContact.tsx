@@ -1,16 +1,19 @@
 import {createRef, useState} from 'react';
-import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {emailReg} from '../../../../const/RegExp';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {CompanyModel} from './CompanyModel';
 
 const CompanyContact = ({route, navigation}: any) => {
-  const {name, description, category} = route.params;
 
-  const [email, setEmail] = useState<string>();
-  const [phoneNumber, setPhoneNumber] = useState<string>();
-  const [street, setStreet] = useState<string>();
-  const [city, setCity] = useState<string>();
-  const [number, setNumber] = useState<string>();
-  const [postCode, setPostCode] = useState<string>();
+  const {name, description, category, contact, address, openingHours, services}: CompanyModel = route.params ?? {};
+
+  const [emailValue, setEmailValue] = useState<string>(contact?.email ?? "");
+  const [phoneNumberValue, setPhoneNumberValue] = useState<string>(contact?.phoneNumber ?? "");
+  const [streetValue, setStreetValue] = useState<string>(address?.street ?? "");
+  const [cityValue, setCityValue] = useState<string>(address?.city ?? "");
+  const [numberValue, setNumberValue] = useState<string>(address?.number ?? "");
+  const [postCodeValue, setPostCodeValue] = useState<string>(address?.postCode ?? "");
   const [errorText, setErrorText] = useState<string>();
 
   const phoneNumberRef = createRef();
@@ -21,137 +24,165 @@ const CompanyContact = ({route, navigation}: any) => {
 
   const saveCompanyContact = () => {
     setErrorText('');
-    if (!email) {
+    if (!emailValue) {
       setErrorText('Set company email');
       return;
     }
-    if (!emailReg.test(email)) {
+    if (!emailReg.test(emailValue)) {
       setErrorText('Invalid email');
       return;
     }
-    if (!phoneNumber) {
+    if (!phoneNumberValue) {
       setErrorText('Set company phoneNumber');
       return;
     }
-    if (!street) {
+    if (!streetValue) {
       setErrorText('Set company street');
       return;
     }
-    if (!city) {
+    if (!cityValue) {
       setErrorText('Set company city');
       return;
     }
-    if (!number) {
+    if (!numberValue) {
       setErrorText('Set company address number');
       return;
     }
-    if (!postCode) {
+    if (!postCodeValue) {
       setErrorText('Set company post code');
       return;
     }
-    navigation.navigate("CompanyTimetable", {
-      name, description, category, email, phoneNumber, street, city, number, postCode
+    AsyncStorage.setItem("@newcompany",
+      JSON.stringify({
+        name, description, category,
+        openingHours, services,
+        contact: {
+          email: emailValue,
+          phoneNumber: phoneNumberValue,
+        },
+        address: {
+          street: streetValue,
+          city: cityValue,
+          number: numberValue,
+          postCode: postCodeValue
+        }
+      }))
+      .then(r => {
+        console.log(r);
+      });
+    navigation.navigate("Company Timetable", {
+      name, description, category,
+      openingHours, services,
+      contact: {
+        email: emailValue,
+        phoneNumber: phoneNumberValue,
+      },
+      address: {
+        street: streetValue,
+        city: cityValue,
+        number: numberValue,
+        postCode: postCodeValue
+      }
     });
   }
 
   return (
-    <View style={{flex: 1}}>
-      {/* TODO Loader */}
-      <ScrollView keyboardShouldPersistTaps="handled"
-                  contentContainerStyle={{
-                    alignContent: 'center',
-                    justifyContent: 'center'
-                  }}>
-        <KeyboardAvoidingView enabled>
-          <View style={styles.sectionStyle}>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(email) => setEmail(email)}
-              placeholder="Enter contact email"
-              placeholderTextColor="#8b9cb5"
-              autoCapitalize="sentences"
-              returnKeyType="next"
-              onSubmitEditing={() => phoneNumberRef.current && phoneNumberRef.current.focus()}
-              blurOnSubmit={false}
-            />
-          </View>
-          <View style={styles.sectionStyle}>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(email) => setPhoneNumber(email)}
-              placeholder="Enter contact phone nubmer"
-              placeholderTextColor="#8b9cb5"
-              autoCapitalize="sentences"
-              returnKeyType="next"
-              ref={phoneNumberRef}
-              onSubmitEditing={() => streeetRef.current && streeetRef.current.focus()}
-              blurOnSubmit={false}
-            />
-          </View>
-          <View style={styles.sectionStyle}>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(street) => setStreet(street)}
-              placeholder="Enter street"
-              placeholderTextColor="#8b9cb5"
-              autoCapitalize="sentences"
-              returnKeyType="next"
-              ref={streeetRef}
-              onSubmitEditing={() => numberRef.current && numberRef.current.focus()}
-              blurOnSubmit={false}
-            />
-          </View>
-          <View style={styles.sectionStyle}>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(number) => setNumber(number)}
-              placeholder="Enter address number"
-              placeholderTextColor="#8b9cb5"
-              autoCapitalize="sentences"
-              returnKeyType="next"
-              ref={numberRef}
-              onSubmitEditing={() => cityRef.current && cityRef.current.focus()}
-              blurOnSubmit={false}
-            />
-          </View>
-          <View style={styles.sectionStyle}>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(city) => setCity(city)}
-              placeholder="Enter city"
-              placeholderTextColor="#8b9cb5"
-              autoCapitalize="sentences"
-              returnKeyType="next"
-              ref={cityRef}
-              onSubmitEditing={() => postCodeRef.current && postCodeRef.current.focus()}
-              blurOnSubmit={false}
-            />
-          </View>
-          <View style={styles.sectionStyle}>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(postCode) => setPostCode(postCode)}
-              placeholder="Enter post code"
-              placeholderTextColor="#8b9cb5"
-              autoCapitalize="sentences"
-              returnKeyType="next"
-              ref={postCodeRef}
-              blurOnSubmit={false}
-            />
-          </View>
-          {errorText !== '' ? (
-            <Text style={styles.errorTextStyle}>
-              {errorText}
-            </Text>
-          ) : null}
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            activeOpacity={0.5}
-            onPress={() => saveCompanyContact()}>
-            <Text style={styles.buttonTextStyle}>Continue</Text>
-          </TouchableOpacity>
-        </KeyboardAvoidingView>
-      </ScrollView>
+    <View style={{flex: 1, justifyContent: 'center'}}>
+      <KeyboardAvoidingView enabled>
+        <View style={styles.sectionStyle}>
+          <TextInput
+            style={styles.inputStyle}
+            onChangeText={(email) => setEmailValue(email)}
+            placeholder="Enter contact email"
+            placeholderTextColor="#8b9cb5"
+            autoCapitalize="sentences"
+            returnKeyType="next"
+            value={emailValue ?? ""}
+            onSubmitEditing={() => phoneNumberRef.current && phoneNumberRef.current.focus()}
+            blurOnSubmit={false}
+          />
+        </View>
+        <View style={styles.sectionStyle}>
+          <TextInput
+            style={styles.inputStyle}
+            onChangeText={(email) => setPhoneNumberValue(email)}
+            placeholder="Enter contact phone nubmer"
+            placeholderTextColor="#8b9cb5"
+            autoCapitalize="sentences"
+            returnKeyType="next"
+            value={phoneNumberValue ?? ""}
+            ref={phoneNumberRef}
+            onSubmitEditing={() => streeetRef.current && streeetRef.current.focus()}
+            blurOnSubmit={false}
+          />
+        </View>
+        <View style={styles.sectionStyle}>
+          <TextInput
+            style={styles.inputStyle}
+            onChangeText={(street) => setStreetValue(street)}
+            placeholder="Enter street"
+            placeholderTextColor="#8b9cb5"
+            autoCapitalize="sentences"
+            returnKeyType="next"
+            value={streetValue ?? ""}
+            ref={streeetRef}
+            onSubmitEditing={() => numberRef.current && numberRef.current.focus()}
+            blurOnSubmit={false}
+          />
+        </View>
+        <View style={styles.sectionStyle}>
+          <TextInput
+            style={styles.inputStyle}
+            onChangeText={(number) => setNumberValue(number)}
+            placeholder="Enter address number"
+            placeholderTextColor="#8b9cb5"
+            autoCapitalize="sentences"
+            returnKeyType="next"
+            value={numberValue ?? ""}
+            ref={numberRef}
+            onSubmitEditing={() => cityRef.current && cityRef.current.focus()}
+            blurOnSubmit={false}
+          />
+        </View>
+        <View style={styles.sectionStyle}>
+          <TextInput
+            style={styles.inputStyle}
+            onChangeText={(city) => setCityValue(city)}
+            placeholder="Enter city"
+            placeholderTextColor="#8b9cb5"
+            autoCapitalize="sentences"
+            returnKeyType="next"
+            value={cityValue ?? ""}
+            ref={cityRef}
+            onSubmitEditing={() => postCodeRef.current && postCodeRef.current.focus()}
+            blurOnSubmit={false}
+          />
+        </View>
+        <View style={styles.sectionStyle}>
+          <TextInput
+            style={styles.inputStyle}
+            onChangeText={(postCode) => setPostCodeValue(postCode)}
+            placeholder="Enter post code"
+            placeholderTextColor="#8b9cb5"
+            autoCapitalize="sentences"
+            returnKeyType="next"
+            value={postCodeValue ?? ""}
+            ref={postCodeRef}
+            blurOnSubmit={false}
+          />
+        </View>
+        {errorText !== '' ? (
+          <Text style={styles.errorTextStyle}>
+            {errorText}
+          </Text>
+        ) : null}
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          activeOpacity={0.5}
+          onPress={() => saveCompanyContact()}>
+          <Text style={styles.buttonTextStyle}>Continue</Text>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
     </View>
   )
 }

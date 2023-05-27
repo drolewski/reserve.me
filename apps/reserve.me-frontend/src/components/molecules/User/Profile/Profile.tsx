@@ -1,8 +1,8 @@
-import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native"
+import {KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native"
 import {useEffect, useState} from 'react';
 import {updateUser} from '../../../../services/user/UserService';
 
-const Profile = ({route, navigation}: any) => {
+const Profile = ({route}: any) => {
 
   const {profile, phoneNumber} = route.params;
 
@@ -46,77 +46,68 @@ const Profile = ({route, navigation}: any) => {
     }
   }
 
-  return <View style={{flex: 1}}>
-    <ScrollView
-      keyboardShouldPersistTaps="handled"
-      contentContainerStyle={{
-        alignContent: 'center',
-        justifyContent: 'center'
-      }}>
-      <KeyboardAvoidingView enabled>
-        <View style={styles.sectionStyle}>
-          <TextInput
-            style={styles.inputStyle}
-            onChangeText={setNewName}
-            placeholder="Enter name"
-            placeholderTextColor="#8b9cb5"
-            autoCapitalize="sentences"
-            returnKeyType="next"
-            value={newName ?? ''}
-            blurOnSubmit={false}
-          />
-        </View>
-        <View style={styles.sectionStyle}>
-          <TextInput
-            style={styles.inputStyle}
-            onChangeText={setNewSurname}
-            placeholder="Enter surname"
-            placeholderTextColor="#8b9cb5"
-            autoCapitalize="sentences"
-            returnKeyType="next"
-            value={newSurname ?? ''}
-            blurOnSubmit={false}
-          />
-        </View>
-        <View style={styles.sectionStyle}>
-          <TextInput
-            style={styles.inputStyle}
-            onChangeText={setNewSex}
-            placeholder="Enter sex"
-            placeholderTextColor="#8b9cb5"
-            autoCapitalize="sentences"
-            returnKeyType="next"
-            value={newSex ?? ''}
-            blurOnSubmit={false}
-          />
-        </View>
-        {/* TODO datepicker */}
-        <View style={styles.sectionStyle}>
-          <TextInput
-            style={styles.inputStyle}
-            onChangeText={setNewBirthday}
-            placeholder="Enter birthday"
-            placeholderTextColor="#8b9cb5"
-            autoCapitalize="sentences"
-            returnKeyType="next"
-            value={newBirthday ?? ''}
-            blurOnSubmit={false}
-          />
-        </View>
-        {/* TODO extract error component */}
-        {errorText !== '' ? (
-          <Text style={styles.errorTextStyle}>
-            {errorText}
-          </Text>
-        ) : null}
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          activeOpacity={0.5}
-          onPress={saveProfileData}>
-          <Text style={styles.buttonTextStyle}>Save</Text>
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
-    </ScrollView>
+  return <View style={{flex: 1, justifyContent: 'center'}}>
+    <KeyboardAvoidingView enabled>
+      <View style={styles.sectionStyle}>
+        <TextInput
+          style={styles.inputStyle}
+          onChangeText={setNewName}
+          placeholder="Enter name"
+          placeholderTextColor="#8b9cb5"
+          autoCapitalize="sentences"
+          returnKeyType="next"
+          value={newName ?? ''}
+          blurOnSubmit={false}
+        />
+      </View>
+      <View style={styles.sectionStyle}>
+        <TextInput
+          style={styles.inputStyle}
+          onChangeText={setNewSurname}
+          placeholder="Enter surname"
+          placeholderTextColor="#8b9cb5"
+          autoCapitalize="sentences"
+          returnKeyType="next"
+          value={newSurname ?? ''}
+          blurOnSubmit={false}
+        />
+      </View>
+      <View style={styles.sectionStyle}>
+        <TextInput
+          style={styles.inputStyle}
+          onChangeText={setNewSex}
+          placeholder="Enter sex"
+          placeholderTextColor="#8b9cb5"
+          autoCapitalize="sentences"
+          returnKeyType="next"
+          value={newSex ?? ''}
+          blurOnSubmit={false}
+        />
+      </View>
+      <View style={styles.sectionStyle}>
+        <TextInput
+          style={styles.inputStyle}
+          onChangeText={setNewBirthday}
+          placeholder="Enter birthday"
+          placeholderTextColor="#8b9cb5"
+          autoCapitalize="sentences"
+          returnKeyType="next"
+          value={newBirthday ?? ''}
+          blurOnSubmit={false}
+        />
+      </View>
+      {errorText !== '' ? (
+        <Text style={styles.errorTextStyle}>
+          {errorText}
+        </Text>
+      ) : null}
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        activeOpacity={0.5}
+        onPress={saveProfileData}>
+        <Text style={styles.buttonTextStyle}>Save</Text>
+      </TouchableOpacity>
+    </KeyboardAvoidingView>
   </View>
 }
 

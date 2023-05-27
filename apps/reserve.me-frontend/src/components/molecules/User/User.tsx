@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useEffect, useState} from 'react';
 import {UserDataResponse} from '../../../services/user/UserDataResponse';
 import {userApi} from '../../../services/user/UserService';
@@ -10,9 +10,11 @@ const User = ({navigation}: any) => {
   const [storedPhoneNumber, setStoredPhoneNumber] = useState<string>("");
 
   useEffect(() => {
-    AsyncStorage.getItem('@userPhoneNumber').then(r => setStoredPhoneNumber(r));
-    userApi(storedPhoneNumber)
-      .then((response: UserDataResponse) => setUser(response))
+    AsyncStorage.getItem('@userPhoneNumber').then(r => {
+      setStoredPhoneNumber(r);
+      userApi(r)
+        .then((response: UserDataResponse) => setUser(response));
+    });
   }, []);
 
   const getDate = (date: Date) => {
@@ -23,64 +25,48 @@ const User = ({navigation}: any) => {
   }
 
   return (
-    <View style={{flex: 1}}>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{
-          alignContent: 'center',
-          justifyContent: 'center'
+    <View style={{flex: 1, justifyContent: 'center'}}>
+      <Text style={styles.successTextStyle}>{user?.userName}</Text>
+      <Text style={styles.successTextStyle}>{user?.phoneNumber}</Text>
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        activeOpacity={0.5}
+        onPress={() => navigation.navigate('Profile', {
+          profile: {
+            name: user?.profile?.name ?? '',
+            surname: user?.profile?.surname ?? '',
+            sex: user?.profile?.sex ?? '',
+            birthday: !!user?.profile?.birthday ? getDate(user?.profile?.birthday) : null,
+          },
+          phoneNumber: storedPhoneNumber
+        })}>
+        <Text style={styles.buttonTextStyle}>Personal data</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        activeOpacity={0.5}
+        onPress={() => navigation.navigate('Address', {
+          address: {
+            street: user?.address?.street ?? '',
+            city: user?.address?.city ?? '',
+            postCode: user?.address?.postCode ?? '',
+            number: user?.address?.number ?? '',
+          },
+          phoneNumber: storedPhoneNumber
+        })}>
+        <Text style={styles.buttonTextStyle}>Address</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        activeOpacity={0.5}
+        onPress={() => {
+          AsyncStorage.removeItem('@userPhoneNumber').then(() => navigation.reset({
+            index: 0,
+            routes: [{name: 'Welcome'}],
+          }))
         }}>
-        <Text style={styles.successTextStyle}>{user?.userName}</Text>
-        <Text style={styles.successTextStyle}>{user?.phoneNumber}</Text>
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          activeOpacity={0.5}
-          onPress={() => navigation.navigate('Profile', {
-            profile: {
-              name: user?.profile?.name ?? '',
-              surname: user?.profile?.surname ?? '',
-              sex: user?.profile?.sex ?? '',
-              birthday: !!user?.profile?.birthday ? getDate(user?.profile?.birthday) : null,
-            },
-            phoneNumber: storedPhoneNumber
-          })}>
-          <Text style={styles.buttonTextStyle}>Personal data</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          activeOpacity={0.5}
-          onPress={() => navigation.navigate('Address', {
-            address: {
-              street: user?.address?.street ?? '',
-              city: user?.address?.city ?? '',
-              postCode: user?.address?.postCode ?? '',
-              number: user?.address?.number ?? '',
-            },
-            phoneNumber: storedPhoneNumber
-          })}>
-          <Text style={styles.buttonTextStyle}>Address</Text>
-        </TouchableOpacity>
-        {/* TODO history tab */}
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          activeOpacity={0.5}
-          onPress={() => navigation.reset({
-            index: 0,
-            routes: [{name: 'Address'}],
-          })}>
-          <Text style={styles.buttonTextStyle}>History</Text>
-        </TouchableOpacity>
-        {/* TODO remove from app session */}
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          activeOpacity={0.5}
-          onPress={() => navigation.reset({
-            index: 0,
-            routes: [{name: 'Address'}],
-          })}>
-          <Text style={styles.buttonTextStyle}>Logout</Text>
-        </TouchableOpacity>
-      </ScrollView>
+        <Text style={styles.buttonTextStyle}>Logout</Text>
+      </TouchableOpacity>
     </View>
   );
 }

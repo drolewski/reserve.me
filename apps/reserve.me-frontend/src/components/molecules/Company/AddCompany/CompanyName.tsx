@@ -1,77 +1,81 @@
-import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {createRef, useState} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {CompanyModel} from './CompanyModel';
 
-const CompanyName = ({navigation}: any) => {
+const CompanyName = ({navigation, route}: any) => {
 
-  const [name, setName] = useState<string>();
-  const [description, setDescription] = useState<string>();
+  const {name, description, category, contact, address, openingHours, services}: CompanyModel = route.params ?? {};
+
+  const [nameValue, setNameValue] = useState<string>(name ?? "");
+  const [descriptionValue, setDescriptionValue] = useState<string>(description ?? "");
   const [errorText, setErrorText] = useState<string>();
 
   const descriptionRef = createRef();
 
   const saveCompanyName = () => {
     setErrorText('');
-    if (!name) {
+    if (!nameValue) {
       setErrorText('Set company name');
       return;
     }
-    if (!description) {
+    if (!descriptionValue) {
       setErrorText('Set company description');
       return;
     }
-    navigation.navigate('CompanyCategory', {
-      name, description
+    AsyncStorage.setItem("@newcompany", JSON.stringify({
+      category, contact, address, openingHours, services,
+      name: nameValue,
+      description: descriptionValue
+    })).then(r => console.log(r));
+    navigation.navigate('Company Category', {
+      category, contact, address, openingHours, services,
+      name: nameValue, description: descriptionValue
     });
   }
 
   return (
-    <View style={{flex: 1}}>
-      <ScrollView keyboardShouldPersistTaps="handled"
-                  contentContainerStyle={{
-                    alignContent: 'center',
-                    justifyContent: 'center'
-                  }}>
-        <KeyboardAvoidingView enabled>
-          <View style={styles.sectionStyle}>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(name) => setName(name)}
-              placeholder="Enter company name"
-              placeholderTextColor="#8b9cb5"
-              autoCapitalize="sentences"
-              returnKeyType="next"
-              onSubmitEditing={() => descriptionRef.current && descriptionRef.current.focus()}
-              blurOnSubmit={false}
-            />
-          </View>
-          <View style={styles.sectionStyle}>
-            <TextInput
-              style={styles.inputStyle}
-              multiline
-              numberOfLines={5}
-              maxLength={100000}
-              onChangeText={(description) => setDescription(description)}
-              placeholder="Enter description"
-              placeholderTextColor="#8b9cb5"
-              autoCapitalize="sentences"
-              returnKeyType="next"
-              ref={descriptionRef}
-              blurOnSubmit={false}
-            />
-          </View>
-          {errorText !== '' ? (
-            <Text style={styles.errorTextStyle}>
-              {errorText}
-            </Text>
-          ) : null}
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            activeOpacity={0.5}
-            onPress={() => saveCompanyName()}>
-            <Text style={styles.buttonTextStyle}>Continue</Text>
-          </TouchableOpacity>
-        </KeyboardAvoidingView>
-      </ScrollView>
+    <View style={{flex: 1, justifyContent: 'center'}}>
+      <KeyboardAvoidingView enabled>
+        <View style={styles.sectionStyle}>
+          <TextInput
+            style={styles.inputStyle}
+            onChangeText={(name) => setNameValue(name)}
+            placeholder="Enter company name"
+            placeholderTextColor="#8b9cb5"
+            autoCapitalize="sentences"
+            returnKeyType="next"
+            onSubmitEditing={() => descriptionRef.current && descriptionRef.current.focus()}
+            blurOnSubmit={false}
+          />
+        </View>
+        <View style={styles.sectionStyle}>
+          <TextInput
+            style={styles.inputStyle}
+            multiline
+            numberOfLines={5}
+            maxLength={100000}
+            onChangeText={(description) => setDescriptionValue(description)}
+            placeholder="Enter description"
+            placeholderTextColor="#8b9cb5"
+            autoCapitalize="sentences"
+            returnKeyType="next"
+            ref={descriptionRef}
+            blurOnSubmit={false}
+          />
+        </View>
+        {errorText !== '' ? (
+          <Text style={styles.errorTextStyle}>
+            {errorText}
+          </Text>
+        ) : null}
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          activeOpacity={0.5}
+          onPress={() => saveCompanyName()}>
+          <Text style={styles.buttonTextStyle}>Continue</Text>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
     </View>
   )
 }

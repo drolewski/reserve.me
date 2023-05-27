@@ -7,10 +7,7 @@ const Home = () => {
   const [storedData, setStoredData] = useState<string>();
 
   useEffect(() => {
-    AsyncStorage.getItem('@userPhoneNumber').then(r => {
-      console.log(r);
-      setStoredData(r);
-    });
+    AsyncStorage.getItem('@userPhoneNumber').then(r => setStoredData(r));
   }, []);
 
   return <Text>{storedData}</Text>

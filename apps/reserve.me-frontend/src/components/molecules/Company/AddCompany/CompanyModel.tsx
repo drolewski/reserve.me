@@ -1,5 +1,4 @@
-export interface CompanyRequest {
-  ownerId: string;
+export interface CompanyModel {
   name?: string;
   description?: string;
   category?: string[];
@@ -40,8 +39,8 @@ export enum WeekDay {
 
 export interface OpeningHours {
   weekDay?: WeekDay;
-  open?: Date;
-  close?: Date;
+  open?: string;
+  close?: string;
 }
 
 export interface ServiceTime {

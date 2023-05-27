@@ -6,11 +6,11 @@ import Reservation from '../Reservation/Reservation';
 const Stack = createNativeStackNavigator();
 
 const SearchNavigationStack = () => {
-  return <Stack.Navigator initialRouteName="Search">
-    <Stack.Screen name="Search"
+  return <Stack.Navigator initialRouteName="SearchScreen">
+    <Stack.Screen name="Search Company"
                   component={Search}
                   options={{headerShown: false}}/>
-    <Stack.Screen name="SearchCompanyDetails"
+    <Stack.Screen name="Company Details"
                   component={SearchCompanyDetails}
                   options={{headerShown: false}}/>
     <Stack.Screen name="Reservation"

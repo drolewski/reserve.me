@@ -1,4 +1,4 @@
-import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {useState} from 'react';
 import {LoginRequest} from '../../../services/authorization/LoginRequest';
 import {authorize, login} from '../../../services/authorization/AuthorizationService';
@@ -55,76 +55,65 @@ const Login = ({navigation}: any) => {
 
   if (isLoginSucceed) {
     return (
-      <View
-        style={{
-          flex: 1,
-        }}>
-        <ScrollView keyboardShouldPersistTaps="handled"
-                    contentContainerStyle={{
-                      alignContent: 'center',
-                      justifyContent: 'center'
-                    }}>
-          <KeyboardAvoidingView enabled>
-            <View style={styles.sectionStyle}>
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(authorizationCode) => setAuthorizationCode(authorizationCode)}
-                placeholder="Enter authorization code"
-                placeholderTextColor="#8b9cb5"
-                keyboardType="number-pad"
-                inputMode="numeric"
-                textContentType="oneTimeCode"
-                returnKeyType="next"
-                value={authorizationCode}
-                blurOnSubmit={false}
-              />
-            </View>
-            {errorText !== '' ? (
-              <Text style={styles.errorTextStyle}>
-                {errorText}
-              </Text>
-            ) : null}
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              activeOpacity={0.5}
-              onPress={() => handleAuthorization()}>
-              <Text style={styles.buttonTextStyle}>Confirm</Text>
-            </TouchableOpacity>
-          </KeyboardAvoidingView>
-        </ScrollView>
+      <View style={{flex: 1, justifyContent: 'center'}}>
+        <KeyboardAvoidingView enabled>
+          <View style={styles.sectionStyle}>
+            <TextInput
+              style={styles.inputStyle}
+              onChangeText={(authorizationCode) => setAuthorizationCode(authorizationCode)}
+              placeholder="Enter authorization code"
+              placeholderTextColor="#8b9cb5"
+              keyboardType="number-pad"
+              inputMode="numeric"
+              textContentType="oneTimeCode"
+              returnKeyType="next"
+              value={authorizationCode}
+              blurOnSubmit={false}
+            />
+          </View>
+          {errorText !== '' ? (
+            <Text style={styles.errorTextStyle}>
+              {errorText}
+            </Text>
+          ) : null}
+          <TouchableOpacity
+            style={styles.buttonStyle}
+            activeOpacity={0.5}
+            onPress={() => handleAuthorization()}>
+            <Text style={styles.buttonTextStyle}>Confirm</Text>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
       </View>
     );
   }
 
   return (
-    <View style={{flex: 1}}>
-      <ScrollView>
-        <View style={styles.sectionStyle}>
-          <TextInput
-            style={styles.inputStyle}
-            onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
-            placeholder="Enter phone number"
-            placeholderTextColor="#8b9cb5"
-            keyboardType="phone-pad"
-            autoComplete="tel"
-            inputMode="numeric"
-            textContentType="telephoneNumber"
-            returnKeyType="next"
-            blurOnSubmit={false}
-          />
-        </View>
-        {errorText !== '' ? (
-          <Text style={styles.errorTextStyle}>
-            {errorText}
-          </Text>
-        ) : null}
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          activeOpacity={0.5}
-          onPress={handleSubmitButton}>
-          <Text style={styles.buttonTextStyle}>LOGIN</Text>
-        </TouchableOpacity>
-      </ScrollView>
+    <View style={{flex: 1, justifyContent: 'center'}}>
+      <View style={styles.sectionStyle}>
+        <TextInput
+          style={styles.inputStyle}
+          onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
+          placeholder="Enter phone number"
+          placeholderTextColor="#8b9cb5"
+          keyboardType="phone-pad"
+          autoComplete="tel"
+          inputMode="numeric"
+          textContentType="telephoneNumber"
+          returnKeyType="next"
+          blurOnSubmit={false}
+        />
+      </View>
+      {errorText !== '' ? (
+        <Text style={styles.errorTextStyle}>
+          {errorText}
+        </Text>
+      ) : null}
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        activeOpacity={0.5}
+        onPress={handleSubmitButton}>
+        <Text style={styles.buttonTextStyle}>Login</Text>
+      </TouchableOpacity>
     </View>
   );
 }

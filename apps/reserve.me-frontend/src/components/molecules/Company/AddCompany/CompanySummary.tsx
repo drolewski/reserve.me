@@ -6,11 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CompanySummary = ({route, navigation}: any) => {
 
-  const {
-    name, description, category, email, phoneNumber, street, city, number, postCode,
-    openingHours, services
-  } = route.params;
-
+  const {name, description, category, contact, address, openingHours, services} = route.params ?? {};
 
   const [errorText, setErrorText] = useState<string>("");
   const [storedPhoneNumber, setStoredPhoneNumber] = useState<string>("");
@@ -21,18 +17,7 @@ const CompanySummary = ({route, navigation}: any) => {
 
   const saveCompany = () => {
     const companyRequest = {
-      ownerId: storedPhoneNumber,
-      name,
-      description,
-      category,
-      address: {
-        street, number, postCode, city
-      },
-      contact: {
-        email, phoneNumber
-      },
-      services,
-      openingHours
+      name, description, category, contact, address, openingHours, services, ownerId: storedPhoneNumber
     };
     saveCompanyApiCall(companyRequest)
       .then((response: ErrorResponse) => {
@@ -55,26 +40,26 @@ const CompanySummary = ({route, navigation}: any) => {
                   justifyContent: 'center'
                 }}>
       <KeyboardAvoidingView enabled>
-        <View style={styles.timeSectionStyle}>
+        <View style={styles.companySectionStyle}>
           <Text style={styles.successTextStyle}>{storedPhoneNumber}</Text>
-          <Text style={styles.successTextStyle}>{name}</Text>
-          <Text style={styles.successTextStyle}>{description}</Text>
-          <Text style={styles.successTextStyle}>{category}</Text>
-          <Text style={styles.successTextStyle}>{street}</Text>
-          <Text style={styles.successTextStyle}>{number}</Text>
-          <Text style={styles.successTextStyle}>{postCode}</Text>
-          <Text style={styles.successTextStyle}>{city}</Text>
-          <Text style={styles.successTextStyle}>{email}</Text>
-          <Text style={styles.successTextStyle}>{phoneNumber}</Text>
+          <Text style={styles.successTextStyle}>{name ?? ""}</Text>
+          <Text style={styles.successTextStyle}>{description ?? ""}</Text>
+          <Text style={styles.successTextStyle}>{category ?? ""}</Text>
+          <Text style={styles.successTextStyle}>{address?.street ?? ""}</Text>
+          <Text style={styles.successTextStyle}>{address?.number ?? ""}</Text>
+          <Text style={styles.successTextStyle}>{address?.postCode ?? ""}</Text>
+          <Text style={styles.successTextStyle}>{address?.city ?? ""}</Text>
+          <Text style={styles.successTextStyle}>{contact?.email ?? ""}</Text>
+          <Text style={styles.successTextStyle}>{contact?.phoneNumber ?? ""}</Text>
         </View>
-        {openingHours.map((openingHour: any) =>
-          <View key={openingHour.weekDay} style={styles.timeSectionStyle}>
+        {openingHours?.map((openingHour: any) =>
+          <View key={openingHour.weekDay} style={styles.companySectionStyle}>
             <Text style={styles.dropdownTextStyle}>Week day: {openingHour.weekDay}</Text>
             <Text style={styles.dropdownTextStyle}>Open: {openingHour.open}</Text>
             <Text style={styles.dropdownTextStyle}>Close: {openingHour.close}</Text>
           </View>)}
-        {services.map((service: any) =>
-          <View key={service.name} style={styles.timeSectionStyle}>
+        {services?.map((service: any) =>
+          <View key={service.name} style={styles.companySectionStyle}>
             <Text style={styles.dropdownTextStyle}>Service name: {service.name}</Text>
             <Text style={styles.dropdownTextStyle}>Price: {service.price}</Text>
             <Text style={styles.dropdownTextStyle}>Service time: {service.serviceTime}</Text>
@@ -105,7 +90,7 @@ const styles = StyleSheet.create({
     marginRight: 35,
     margin: 10
   },
-  timeSectionStyle: {
+  companySectionStyle: {
     display: 'flex',
     flexDirection: 'column',
     marginTop: 20,

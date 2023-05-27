@@ -1,12 +1,4 @@
-import {
-  KeyboardAvoidingView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View} from 'react-native';
 import {useEffect, useState} from 'react';
 import {getCompanyList} from '../../../../services/company/CompanyService';
 import {CompanyListResponse} from '../../../../services/company/CompanyListResponse';
@@ -18,20 +10,28 @@ const CompanyList = ({navigation}: any) => {
   const [storedPhoneNumber, setStoredPhoneNumber] = useState<string>("");
 
   useEffect(() => {
-    AsyncStorage.getItem('@userPhoneNumber').then(r => setStoredPhoneNumber(r));
-    getCompanyList(storedPhoneNumber)
-      .then((response: CompanyListResponse[]) => setCompanies(response))
+    AsyncStorage.getItem('@userPhoneNumber').then(r => {
+      setStoredPhoneNumber(r);
+      getCompanyList(r)
+        .then((response: CompanyListResponse[]) => {
+          setCompanies(response);
+        })
+    });
   }, []);
 
   if (companies.length === 0) {
-    return <View style={{flex: 1}}>
-      <Text style={styles.successTextStyle}>You don't have company yet</Text>
-      <TouchableOpacity
-        style={styles.buttonStyle}
-        activeOpacity={0.5}
-        onPress={() => navigation.navigate('CompanyName')}>
-        <Text style={styles.buttonTextStyle}>Add company</Text>
-      </TouchableOpacity>
+    return <View style={{flex: 1, justifyContent: 'center'}}>
+      <KeyboardAvoidingView enabled>
+        <View style={styles.sectionStyle}>
+          <Text style={styles.successTextStyle}>You don't have company yet</Text>
+          <TouchableOpacity
+            style={styles.buttonStyle}
+            activeOpacity={0.5}
+            onPress={() => navigation.navigate('CompanyName')}>
+            <Text style={styles.buttonTextStyle}>Add company</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     </View>
   }
 
@@ -41,31 +41,27 @@ const CompanyList = ({navigation}: any) => {
   }
 
   return <View style={{flex: 1}}>
-    {/* TODO Loader */}
-    <ScrollView keyboardShouldPersistTaps="handled"
-                contentContainerStyle={{
-                  alignContent: 'center',
-                  justifyContent: 'center'
-                }}>
-      <KeyboardAvoidingView enabled>
-        {
-          companies.map(company =>
-            <TouchableHighlight key={company.name} onPress={() => updateCompany(company.name)}>
-              <View style={styles.timeSectionStyle}>
-                <Text>{company.name}</Text>
-                <Text>{company.contact.phoneNumber}</Text>
-                <Text>{company.contact.email}</Text>
-              </View>
-            </TouchableHighlight>)
-        }
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          activeOpacity={0.5}
-          onPress={() => navigation.navigate('CompanyName')}>
-          <Text style={styles.buttonTextStyle}>Add company</Text>
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
-    </ScrollView>
+    <KeyboardAvoidingView enabled>
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        activeOpacity={0.5}
+        onPress={() => navigation.navigate('Company Name')}>
+        <Text style={styles.buttonTextStyle}>Add new company</Text>
+      </TouchableOpacity>
+      {
+        companies.map(company =>
+          <TouchableHighlight key={company.name} onPress={() => updateCompany(company.name)}>
+            <View style={styles.companySectionStyle}>
+              <Text><Text style={styles.companyInfo}><Text style={styles.companyInfo}>Company
+                Name: </Text></Text>{company.name}</Text>
+              <Text><Text style={styles.companyInfo}><Text style={styles.companyInfo}>Phone
+                number: </Text></Text>{company.contact.phoneNumber}</Text>
+              <Text><Text style={styles.companyInfo}><Text
+                style={styles.companyInfo}>Email: </Text></Text>{company.contact.email}</Text>
+            </View>
+          </TouchableHighlight>)
+      }
+    </KeyboardAvoidingView>
   </View>
 
 }
@@ -88,13 +84,15 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderColor: '#dadae8',
   },
-  timeSectionStyle: {
+  companySectionStyle: {
     display: 'flex',
     flexDirection: 'column',
+    alignContent: 'center',
     marginTop: 20,
     marginLeft: 35,
     marginRight: 35,
-    margin: 10
+    margin: 10,
+    fontSize: 20
   },
   buttonStyle: {
     backgroundColor: '#8b9cb5',
@@ -125,6 +123,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     padding: 30,
   },
+  companyInfo: {
+    fontWeight: "bold",
+    fontSize: 18,
+  }
 })
 
 export default CompanyList;

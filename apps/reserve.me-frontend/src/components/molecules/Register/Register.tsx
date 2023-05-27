@@ -1,4 +1,4 @@
-import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {createRef, useState} from 'react';
 import {RegistrationRequest} from '../../../services/authorization/RegisterRequest';
 import {register} from '../../../services/authorization/AuthorizationService';
@@ -53,53 +53,45 @@ const Register = ({navigation}: any) => {
     );
   }
   return (
-    <View style={{flex: 1}}>
-      {/* TODO Loader */}
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{
-          alignContent: 'center',
-          justifyContent: 'center'
-        }}>
-        <KeyboardAvoidingView enabled>
-          <View style={styles.sectionStyle}>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(userName) => setUserName(userName)}
-              placeholder="Enter username"
-              placeholderTextColor="#8b9cb5"
-              autoCapitalize="sentences"
-              returnKeyType="next"
-              onSubmitEditing={() => phoneNumberRef.current && phoneNumberRef.current.focus()}
-              blurOnSubmit={false}
-            />
-          </View>
-          <View style={styles.sectionStyle}>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(number) => setPhoneNumber(number)}
-              placeholder="Enter phone number"
-              placeholderTextColor="#8b9cb5"
-              keyboardType="numeric"
-              returnKeyType="next"
-              textContentType="telephoneNumber"
-              ref={phoneNumberRef}
-              blurOnSubmit={false}
-            />
-          </View>
-          {errorText !== '' ? (
-            <Text style={styles.errorTextStyle}>
-              {errorText}
-            </Text>
-          ) : null}
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            activeOpacity={0.5}
-            onPress={handleSubmitButton}>
-            <Text style={styles.buttonTextStyle}>REGISTER</Text>
-          </TouchableOpacity>
-        </KeyboardAvoidingView>
-      </ScrollView>
+    <View style={{flex: 1, justifyContent: "center"}}>
+      <KeyboardAvoidingView enabled>
+        <View style={styles.sectionStyle}>
+          <TextInput
+            style={styles.inputStyle}
+            onChangeText={(userName) => setUserName(userName)}
+            placeholder="Enter username"
+            placeholderTextColor="#8b9cb5"
+            autoCapitalize="sentences"
+            returnKeyType="next"
+            onSubmitEditing={() => phoneNumberRef.current && phoneNumberRef.current.focus()}
+            blurOnSubmit={false}
+          />
+        </View>
+        <View style={styles.sectionStyle}>
+          <TextInput
+            style={styles.inputStyle}
+            onChangeText={(number) => setPhoneNumber(number)}
+            placeholder="Enter phone number"
+            placeholderTextColor="#8b9cb5"
+            keyboardType="numeric"
+            returnKeyType="next"
+            textContentType="telephoneNumber"
+            ref={phoneNumberRef}
+            blurOnSubmit={false}
+          />
+        </View>
+        {errorText !== '' ? (
+          <Text style={styles.errorTextStyle}>
+            {errorText}
+          </Text>
+        ) : null}
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          activeOpacity={0.5}
+          onPress={handleSubmitButton}>
+          <Text style={styles.buttonTextStyle}>REGISTER</Text>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
     </View>
   );
 }
@@ -148,7 +140,7 @@ const styles = StyleSheet.create({
   successTextStyle: {
     color: '#8b9cb5',
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: 24,
     padding: 30,
   },
 })

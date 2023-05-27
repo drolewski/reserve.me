@@ -1,8 +1,8 @@
-import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native"
+import {KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native"
 import {useEffect, useState} from 'react';
 import {updateUser} from '../../../../services/user/UserService';
 
-const Address = ({route, navigation}: any) => {
+const Address = ({route}: any) => {
 
   const {address, phoneNumber} = route.params;
 
@@ -45,77 +45,68 @@ const Address = ({route, navigation}: any) => {
     }
   }
 
-  return <View style={{flex: 1}}>
-    <ScrollView
-      keyboardShouldPersistTaps="handled"
-      contentContainerStyle={{
-        alignContent: 'center',
-        justifyContent: 'center'
-      }}>
-      <KeyboardAvoidingView enabled>
-        <View style={styles.sectionStyle}>
-          <TextInput
-            style={styles.inputStyle}
-            onChangeText={setNewStreet}
-            placeholder="Enter street"
-            placeholderTextColor="#8b9cb5"
-            autoCapitalize="sentences"
-            returnKeyType="next"
-            value={newStreet ?? ''}
-            blurOnSubmit={false}
-          />
-        </View>
-        <View style={styles.sectionStyle}>
-          <TextInput
-            style={styles.inputStyle}
-            onChangeText={setNewNumber}
-            placeholder="Enter number"
-            placeholderTextColor="#8b9cb5"
-            autoCapitalize="sentences"
-            returnKeyType="next"
-            value={newNumber ?? ''}
-            blurOnSubmit={false}
-          />
-        </View>
-        <View style={styles.sectionStyle}>
-          <TextInput
-            style={styles.inputStyle}
-            onChangeText={setNewCity}
-            placeholder="Enter city"
-            placeholderTextColor="#8b9cb5"
-            autoCapitalize="sentences"
-            returnKeyType="next"
-            value={newCity ?? ''}
-            blurOnSubmit={false}
-          />
-        </View>
-        {/* TODO datepicker */}
-        <View style={styles.sectionStyle}>
-          <TextInput
-            style={styles.inputStyle}
-            onChangeText={setNewPostCode}
-            placeholder="Enter post code"
-            placeholderTextColor="#8b9cb5"
-            autoCapitalize="sentences"
-            returnKeyType="next"
-            value={newPostCode ?? ''}
-            blurOnSubmit={false}
-          />
-        </View>
-        {/* TODO extract error component */}
-        {errorText !== '' ? (
-          <Text style={styles.errorTextStyle}>
-            {errorText}
-          </Text>
-        ) : null}
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          activeOpacity={0.5}
-          onPress={saveAddressData}>
-          <Text style={styles.buttonTextStyle}>Save</Text>
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
-    </ScrollView>
+  return <View style={{flex: 1, justifyContent: 'center'}}>
+    <KeyboardAvoidingView enabled>
+      <View style={styles.sectionStyle}>
+        <TextInput
+          style={styles.inputStyle}
+          onChangeText={setNewStreet}
+          placeholder="Enter street"
+          placeholderTextColor="#8b9cb5"
+          autoCapitalize="sentences"
+          returnKeyType="next"
+          value={newStreet ?? ''}
+          blurOnSubmit={false}
+        />
+      </View>
+      <View style={styles.sectionStyle}>
+        <TextInput
+          style={styles.inputStyle}
+          onChangeText={setNewNumber}
+          placeholder="Enter number"
+          placeholderTextColor="#8b9cb5"
+          autoCapitalize="sentences"
+          returnKeyType="next"
+          value={newNumber ?? ''}
+          blurOnSubmit={false}
+        />
+      </View>
+      <View style={styles.sectionStyle}>
+        <TextInput
+          style={styles.inputStyle}
+          onChangeText={setNewCity}
+          placeholder="Enter city"
+          placeholderTextColor="#8b9cb5"
+          autoCapitalize="sentences"
+          returnKeyType="next"
+          value={newCity ?? ''}
+          blurOnSubmit={false}
+        />
+      </View>
+      <View style={styles.sectionStyle}>
+        <TextInput
+          style={styles.inputStyle}
+          onChangeText={setNewPostCode}
+          placeholder="Enter post code"
+          placeholderTextColor="#8b9cb5"
+          autoCapitalize="sentences"
+          returnKeyType="next"
+          value={newPostCode ?? ''}
+          blurOnSubmit={false}
+        />
+      </View>
+      {errorText !== '' ? (
+        <Text style={styles.errorTextStyle}>
+          {errorText}
+        </Text>
+      ) : null}
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        activeOpacity={0.5}
+        onPress={saveAddressData}>
+        <Text style={styles.buttonTextStyle}>Save</Text>
+      </TouchableOpacity>
+    </KeyboardAvoidingView>
   </View>
 }
 

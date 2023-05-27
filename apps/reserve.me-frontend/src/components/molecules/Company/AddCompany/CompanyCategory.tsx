@@ -1,15 +1,17 @@
 import {useEffect, useState} from 'react';
 import {getCategories} from '../../../../services/company/CompanyService';
 import {Category, CategoryData} from '../../../../services/company/Category';
-import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {MultipleSelectList} from 'react-native-dropdown-select-list';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {CompanyModel} from './CompanyModel';
 
 const CompanyCategory = ({route, navigation}: any) => {
 
-  const {name, description} = route.params
+  const {name, description, category, contact, address, openingHours, services}: CompanyModel = route.params ?? {};
 
-  const [category, setCategory] = useState<string[]>([]);
-  const [categories, setCategories] = useState<CategoryData[]>([]);
+  const [categoryValue, setCategoryValue] = useState<string[]>([]);
+  const [categoriesValue, setCategoriesValue] = useState<CategoryData[]>([]);
   const [errorText, setErrorText] = useState<string>();
 
   useEffect(() => {
@@ -18,51 +20,48 @@ const CompanyCategory = ({route, navigation}: any) => {
         const catResponse: CategoryData[] = response.map(cat => {
           return {key: cat.name, value: cat.name};
         });
-        setCategories(catResponse);
+        setCategoriesValue(catResponse);
       });
   }, []);
 
   const saveCategory = () => {
     setErrorText('');
-    if (category.length === 0) {
+    if (categoryValue.length === 0) {
       setErrorText('Set company category');
       return;
     }
-    navigation.navigate("CompanyContact", {
-      name, description, category
+    AsyncStorage.setItem("@newcompany", JSON.stringify({
+      name, description, contact, address, openingHours, services, category: categoryValue
+    })).then(r => console.log(r));
+    navigation.navigate("Company Contact", {
+      name, description, contact, address, openingHours, services, category: categoryValue
     });
   }
 
   return (
-    <View style={{flex: 1}}>
-      <ScrollView keyboardShouldPersistTaps="handled"
-                  contentContainerStyle={{
-                    alignContent: 'center',
-                    justifyContent: 'center'
-                  }}>
-        <KeyboardAvoidingView enabled>
-          <View style={styles.sectionStyle}>
-            <MultipleSelectList
-              boxStyles={styles.dropdownInputStyle}
-              dropdownTextStyles={styles.dropdownTextStyle}
-              setSelected={(category: any) => setCategory(category)}
-              data={categories}
-              save="value"
-            />
-            {errorText !== '' ? (
-              <Text style={styles.errorTextStyle}>
-                {errorText}
-              </Text>
-            ) : null}
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              activeOpacity={0.5}
-              onPress={() => saveCategory()}>
-              <Text style={styles.buttonTextStyle}>Continue</Text>
-            </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
-      </ScrollView>
+    <View style={{flex: 1, justifyContent: 'center'}}>
+      <KeyboardAvoidingView enabled>
+        <View style={styles.sectionStyle}>
+          <MultipleSelectList
+            boxStyles={styles.dropdownInputStyle}
+            dropdownTextStyles={styles.dropdownTextStyle}
+            setSelected={(category: any) => setCategoryValue(category)}
+            data={categoriesValue}
+            save="value"
+          />
+          {errorText !== '' ? (
+            <Text style={styles.errorTextStyle}>
+              {errorText}
+            </Text>
+          ) : null}
+          <TouchableOpacity
+            style={styles.buttonStyle}
+            activeOpacity={0.5}
+            onPress={() => saveCategory()}>
+            <Text style={styles.buttonTextStyle}>Continue</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     </View>
   );
 }
