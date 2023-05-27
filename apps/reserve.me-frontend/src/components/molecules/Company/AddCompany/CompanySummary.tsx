@@ -19,6 +19,7 @@ const CompanySummary = ({route, navigation}: any) => {
     const companyRequest = {
       name, description, category, contact, address, openingHours, services, ownerId: storedPhoneNumber
     };
+    AsyncStorage.removeItem('@newcompany').then(r => console.log(r));
     saveCompanyApiCall(companyRequest)
       .then((response: ErrorResponse) => {
         if (!!response) {
@@ -33,7 +34,6 @@ const CompanySummary = ({route, navigation}: any) => {
   }
 
   return <View style={{flex: 1}}>
-    {/* TODO Loader */}
     <ScrollView keyboardShouldPersistTaps="handled"
                 contentContainerStyle={{
                   alignContent: 'center',
@@ -41,30 +41,55 @@ const CompanySummary = ({route, navigation}: any) => {
                 }}>
       <KeyboardAvoidingView enabled>
         <View style={styles.companySectionStyle}>
-          <Text style={styles.successTextStyle}>{storedPhoneNumber}</Text>
-          <Text style={styles.successTextStyle}>{name ?? ""}</Text>
-          <Text style={styles.successTextStyle}>{description ?? ""}</Text>
-          <Text style={styles.successTextStyle}>{category ?? ""}</Text>
-          <Text style={styles.successTextStyle}>{address?.street ?? ""}</Text>
-          <Text style={styles.successTextStyle}>{address?.number ?? ""}</Text>
-          <Text style={styles.successTextStyle}>{address?.postCode ?? ""}</Text>
-          <Text style={styles.successTextStyle}>{address?.city ?? ""}</Text>
-          <Text style={styles.successTextStyle}>{contact?.email ?? ""}</Text>
-          <Text style={styles.successTextStyle}>{contact?.phoneNumber ?? ""}</Text>
+          <Text style={styles.companyInfo}>Company details</Text>
+          <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>User phone
+            number: </Text>{storedPhoneNumber}</Text>
+          <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Company name: </Text>{name ?? ""}
+          </Text>
+          <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Company
+            description: </Text>{description ?? ""}</Text>
+          <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Company
+            categories: </Text>{category.join(", ") ?? ""}</Text>
+          <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Company
+            street: </Text>{address?.street ?? ""}</Text>
+          <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Company address
+            number: </Text>{address?.number ?? ""}</Text>
+          <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Company post
+            code: </Text>{address?.postCode ?? ""}</Text>
+          <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Company
+            city: </Text>{address?.city ?? ""}</Text>
+          <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Company
+            email: </Text>{contact?.email ?? ""}</Text>
+          <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Company phone
+            number:</Text>{contact?.phoneNumber ?? ""}</Text>
         </View>
-        {openingHours?.map((openingHour: any) =>
-          <View key={openingHour.weekDay} style={styles.companySectionStyle}>
-            <Text style={styles.dropdownTextStyle}>Week day: {openingHour.weekDay}</Text>
-            <Text style={styles.dropdownTextStyle}>Open: {openingHour.open}</Text>
-            <Text style={styles.dropdownTextStyle}>Close: {openingHour.close}</Text>
-          </View>)}
-        {services?.map((service: any) =>
-          <View key={service.name} style={styles.companySectionStyle}>
-            <Text style={styles.dropdownTextStyle}>Service name: {service.name}</Text>
-            <Text style={styles.dropdownTextStyle}>Price: {service.price}</Text>
-            <Text style={styles.dropdownTextStyle}>Service time: {service.serviceTime}</Text>
-            <Text style={styles.dropdownTextStyle}>Working days:{service.weekDays.join(", ")}</Text>
-          </View>)}
+        <View style={styles.companySectionStyle}>
+          <Text style={styles.companyInfo}>Working days</Text>
+          {openingHours?.map((openingHour: any) =>
+            <>
+              <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Week
+                day: </Text>{openingHour.weekDay}</Text>
+              <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Open: </Text>{openingHour.open}
+              </Text>
+              <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Close: </Text>{openingHour.close}
+              </Text>
+            </>
+          )}
+        </View>
+        <View style={styles.companySectionStyle}>
+          <Text style={styles.companyInfo}>Services</Text>
+          {services?.map((service: any) =>
+            <>
+              <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Service name: </Text>{service.name}
+              </Text>
+              <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Price: </Text>{service.price}
+              </Text>
+              <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Service
+                time: </Text>{service.serviceTime}</Text>
+              <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Working
+                days: </Text>{service.weekDays.join(", ")}</Text>
+            </>)}
+        </View>
         {errorText !== '' ? (
           <Text style={styles.errorTextStyle}>
             {errorText}
@@ -166,6 +191,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     padding: 30,
   },
+  companyTextStyle: {
+    color: '#8b9cb5',
+    fontSize: 18,
+  },
+  companyInfo: {
+    fontWeight: "bold",
+    fontSize: 18,
+  }
 })
 
 

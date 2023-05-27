@@ -116,88 +116,91 @@ const CompanyService = ({route, navigation}: any) => {
   }
 
   return (
-    <ScrollView keyboardShouldPersistTaps="handled"
-                contentContainerStyle={{flex: 1, justifyContent: 'center'}}>
-      <KeyboardAvoidingView enabled>
-        {
-          servicesList.length > 0 ?
-            displayServices() : <View/>
-        }
-        <View key={uniqueKey}>
-          <View style={styles.sectionStyle}>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(name) => setServiceName(name)}
-              placeholder="Enter service name"
-              placeholderTextColor="#8b9cb5"
-              autoCapitalize="sentences"
-              returnKeyType="next"
-              onSubmitEditing={() => priceRef.current && priceRef.current.focus()}
-              blurOnSubmit={false}
-            />
-          </View>
-          <View style={styles.sectionStyle}>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(price) => setPrice(+price)}
-              placeholder="Enter service price"
-              placeholderTextColor="#8b9cb5"
-              autoCapitalize="sentences"
-              keyboardType="numeric"
-              returnKeyType="next"
-              ref={priceRef}
-              onSubmitEditing={() => serviceTimeRef.current && serviceTimeRef.current.focus()}
-              blurOnSubmit={false}
-            />
-          </View>
-          <View style={styles.sectionStyle}>
-            <TextInput
-              style={styles.inputStyle}
-              onChangeText={(minutes) => setServiceTime(+minutes)}
-              placeholder="Enter service time in minutes"
-              placeholderTextColor="#8b9cb5"
-              autoCapitalize="sentences"
-              keyboardType="numeric"
-              returnKeyType="next"
-              ref={serviceTimeRef}
-              blurOnSubmit={false}
-            />
-          </View>
-          <View style={styles.serviceCategorySectionStyle}>
-            <MultipleSelectList
-              boxStyles={styles.dropdownInputStyle}
-              dropdownTextStyles={styles.dropdownTextStyle}
-              setSelected={(weekDay: any) => setWeekDays(weekDay)}
-              data={weekDaysData}
-              save="value"
-            />
-          </View>
-        </View>
-        {errorText !== '' ? (
-          <Text style={styles.errorTextStyle}>
-            {errorText}
-          </Text>
-        ) : null}
-        <TouchableOpacity
-          style={styles.addButtonStyle}
-          activeOpacity={0.5}
-          onPress={addService}>
-          <Text style={styles.buttonTextStyle}>Save service</Text>
-        </TouchableOpacity>
 
-        {globalErrorText !== '' ? (
-          <Text style={styles.errorTextStyle}>
-            {globalErrorText}
-          </Text>
-        ) : null}
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          activeOpacity={0.5}
-          onPress={saveServices}>
-          <Text style={styles.buttonTextStyle}>Continue</Text>
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
-    </ScrollView>
+    <View style={{flex: 1}}>
+      <ScrollView keyboardShouldPersistTaps="handled"
+                  contentContainerStyle={{alignContent: 'center', justifyContent: 'center'}}>
+        <KeyboardAvoidingView enabled>
+          {
+            servicesList.length > 0 ?
+              displayServices() : <View/>
+          }
+          <View key={uniqueKey}>
+            <View style={styles.sectionStyle}>
+              <TextInput
+                style={styles.inputStyle}
+                onChangeText={(name) => setServiceName(name)}
+                placeholder="Enter service name"
+                placeholderTextColor="#8b9cb5"
+                autoCapitalize="sentences"
+                returnKeyType="next"
+                onSubmitEditing={() => priceRef.current && priceRef.current.focus()}
+                blurOnSubmit={false}
+              />
+            </View>
+            <View style={styles.sectionStyle}>
+              <TextInput
+                style={styles.inputStyle}
+                onChangeText={(price) => setPrice(+price)}
+                placeholder="Enter service price"
+                placeholderTextColor="#8b9cb5"
+                autoCapitalize="sentences"
+                keyboardType="numeric"
+                returnKeyType="next"
+                ref={priceRef}
+                onSubmitEditing={() => serviceTimeRef.current && serviceTimeRef.current.focus()}
+                blurOnSubmit={false}
+              />
+            </View>
+            <View style={styles.sectionStyle}>
+              <TextInput
+                style={styles.inputStyle}
+                onChangeText={(minutes) => setServiceTime(+minutes)}
+                placeholder="Enter service time in minutes"
+                placeholderTextColor="#8b9cb5"
+                autoCapitalize="sentences"
+                keyboardType="numeric"
+                returnKeyType="next"
+                ref={serviceTimeRef}
+                blurOnSubmit={false}
+              />
+            </View>
+            <View style={styles.serviceCategorySectionStyle}>
+              <MultipleSelectList
+                boxStyles={styles.dropdownInputStyle}
+                dropdownTextStyles={styles.dropdownTextStyle}
+                setSelected={(weekDay: any) => setWeekDays(weekDay)}
+                data={weekDaysData}
+                save="value"
+              />
+            </View>
+          </View>
+          {errorText !== '' ? (
+            <Text style={styles.errorTextStyle}>
+              {errorText}
+            </Text>
+          ) : null}
+          <TouchableOpacity
+            style={styles.addButtonStyle}
+            activeOpacity={0.5}
+            onPress={addService}>
+            <Text style={styles.buttonTextStyle}>Save service</Text>
+          </TouchableOpacity>
+
+          {globalErrorText !== '' ? (
+            <Text style={styles.errorTextStyle}>
+              {globalErrorText}
+            </Text>
+          ) : null}
+          <TouchableOpacity
+            style={styles.buttonStyle}
+            activeOpacity={0.5}
+            onPress={saveServices}>
+            <Text style={styles.buttonTextStyle}>Continue</Text>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
+      </ScrollView>
+    </View>
   );
 
 }

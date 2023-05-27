@@ -182,254 +182,259 @@ const CompanyTimetable = ({route, navigation}: any) => {
   }
 
   return (
-    <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{flex: 1, justifyContent: 'center'}}>
-      <KeyboardAvoidingView enabled>
-        <View style={styles.timetableViewStyle}>
-          <View style={styles.companySectionStyle}>
-            <View style={styles.checkboxContainer}>
-              <CheckBox value={isMonday}
-                        onValueChange={setIsMonday}
-                        style={styles.checkbox}/>
-              <Text style={styles.label}>Monday</Text>
+    <View style={{flex: 1}}>
+      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{
+        alignContent: 'center',
+        justifyContent: 'center'
+      }}>
+        <KeyboardAvoidingView enabled>
+          <View>
+            <View style={styles.companySectionStyle}>
+              <View style={styles.checkboxContainer}>
+                <CheckBox value={isMonday}
+                          onValueChange={setIsMonday}
+                          style={styles.checkbox}/>
+                <Text style={styles.label}>Monday</Text>
+              </View>
             </View>
+            {isMonday ?
+              <View style={styles.timeTableSection}>
+                <TextInput
+                  style={styles.inputStyle}
+                  onChangeText={(open) => setMondayOpen(open)}
+                  placeholder="Enter open hour"
+                  placeholderTextColor="#8b9cb5"
+                  autoCapitalize="sentences"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  value={mondayOpen ?? ""}
+                />
+                <TextInput
+                  style={styles.inputStyle}
+                  onChangeText={(close) => setMondayClose(close)}
+                  placeholder="Enter close hour"
+                  placeholderTextColor="#8b9cb5"
+                  autoCapitalize="sentences"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  value={mondayClose ?? ""}
+                />
+              </View>
+              : <></>
+            }
+            <View style={styles.companySectionStyle}>
+              <View style={styles.checkboxContainer}>
+                <CheckBox value={isTuesday}
+                          onValueChange={setIsTuesday}
+                          style={styles.checkbox}/>
+                <Text style={styles.label}>Tuesday</Text>
+              </View>
+            </View>
+            {isTuesday ?
+              <View style={styles.timeTableSection}>
+                <TextInput
+                  style={styles.inputStyle}
+                  onChangeText={(open) => setTuesdayOpen(open)}
+                  placeholder="Enter open hour"
+                  placeholderTextColor="#8b9cb5"
+                  autoCapitalize="sentences"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  value={tuesdayOpen ?? ""}
+                />
+                <TextInput
+                  style={styles.inputStyle}
+                  onChangeText={(close) => setTuesdayClose(close)}
+                  placeholder="Enter close hour"
+                  placeholderTextColor="#8b9cb5"
+                  autoCapitalize="sentences"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  value={tuesdayClose ?? ""}
+                />
+              </View>
+              : <></>
+            }
+            <View style={styles.companySectionStyle}>
+              <View style={styles.checkboxContainer}>
+                <CheckBox value={isWednesday}
+                          onValueChange={setIsWednesday}
+                          style={styles.checkbox}/>
+                <Text style={styles.label}>Wednesday</Text>
+              </View>
+            </View>
+            {isWednesday ?
+              <View style={styles.timeTableSection}>
+                <TextInput
+                  style={styles.inputStyle}
+                  onChangeText={(open) => setWednesdayOpen(open)}
+                  placeholder="Enter open hour"
+                  placeholderTextColor="#8b9cb5"
+                  autoCapitalize="sentences"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  value={wednesdayOpen ?? ""}
+                />
+                <TextInput
+                  style={styles.inputStyle}
+                  onChangeText={(close) => setWednesdayClose(close)}
+                  placeholder="Enter close hour"
+                  placeholderTextColor="#8b9cb5"
+                  autoCapitalize="sentences"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  value={wednesdayClose ?? ""}
+                />
+              </View>
+              : <></>
+            }
+            <View style={styles.companySectionStyle}>
+              <View style={styles.checkboxContainer}>
+                <CheckBox value={isThursday}
+                          onValueChange={setIsThursday}
+                          style={styles.checkbox}/>
+                <Text style={styles.label}>Thursday</Text>
+              </View>
+            </View>
+            {isThursday ?
+              <View style={styles.timeTableSection}>
+                <TextInput
+                  style={styles.inputStyle}
+                  onChangeText={(open) => setThursdayOpen(open)}
+                  placeholder="Enter open hour"
+                  placeholderTextColor="#8b9cb5"
+                  autoCapitalize="sentences"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  value={thursdayOpen ?? ""}
+                />
+                <TextInput
+                  style={styles.inputStyle}
+                  onChangeText={(close) => setThursdayClose(close)}
+                  placeholder="Enter close hour"
+                  placeholderTextColor="#8b9cb5"
+                  autoCapitalize="sentences"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  value={thursdayClose ?? ""}
+                />
+              </View>
+              : <></>
+            }
+            <View style={styles.companySectionStyle}>
+              <View style={styles.checkboxContainer}>
+                <CheckBox value={isFriday}
+                          onValueChange={setIsFriday}
+                          style={styles.checkbox}/>
+                <Text style={styles.label}>Friday</Text>
+              </View>
+            </View>
+            {isFriday ?
+              <View style={styles.timeTableSection}>
+                <TextInput
+                  style={styles.inputStyle}
+                  onChangeText={(open) => setFridayOpen(open)}
+                  placeholder="Enter open hour"
+                  placeholderTextColor="#8b9cb5"
+                  autoCapitalize="sentences"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  value={fridayOpen ?? ""}
+                />
+                <TextInput
+                  style={styles.inputStyle}
+                  onChangeText={(close) => setFridayClose(close)}
+                  placeholder="Enter close hour"
+                  placeholderTextColor="#8b9cb5"
+                  autoCapitalize="sentences"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  value={fridayClose ?? ""}
+                />
+              </View>
+              : <></>
+            }
+            <View style={styles.companySectionStyle}>
+              <View style={styles.checkboxContainer}>
+                <CheckBox value={isSaturday}
+                          onValueChange={setIsSaturday}
+                          style={styles.checkbox}/>
+                <Text style={styles.label}>Saturday</Text>
+              </View>
+            </View>
+            {isSaturday ?
+              <View style={styles.timeTableSection}>
+                <TextInput
+                  style={styles.inputStyle}
+                  onChangeText={(open) => setSaturdayOpen(open)}
+                  placeholder="Enter open hour"
+                  placeholderTextColor="#8b9cb5"
+                  autoCapitalize="sentences"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  value={saturdayOpen ?? ""}
+                />
+                <TextInput
+                  style={styles.inputStyle}
+                  onChangeText={(close) => setSaturdayClose(close)}
+                  placeholder="Enter close hour"
+                  placeholderTextColor="#8b9cb5"
+                  autoCapitalize="sentences"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  value={saturdayClose ?? ""}
+                />
+              </View>
+              : <></>
+            }
+            <View style={styles.companySectionStyle}>
+              <View style={styles.checkboxContainer}>
+                <CheckBox value={isSunday}
+                          onValueChange={setIsSunday}
+                          style={styles.checkbox}/>
+                <Text style={styles.label}>Sunday</Text>
+              </View>
+            </View>
+            {isSunday ?
+              <View style={styles.timeTableSection}>
+                <TextInput
+                  style={styles.inputStyle}
+                  onChangeText={(open) => setSundayOpen(open)}
+                  placeholder="Enter open hour"
+                  placeholderTextColor="#8b9cb5"
+                  autoCapitalize="sentences"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  value={sundayOpen ?? ""}
+                />
+                <TextInput
+                  style={styles.inputStyle}
+                  onChangeText={(close) => setSundayClose(close)}
+                  placeholder="Enter close hour"
+                  placeholderTextColor="#8b9cb5"
+                  autoCapitalize="sentences"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  value={sundayClose ?? ""}
+                />
+              </View>
+              : <></>
+            }
+            {errorText !== '' ? (
+              <Text style={styles.errorTextStyle}>
+                {errorText}
+              </Text>
+            ) : null}
+            <TouchableOpacity
+              style={styles.buttonStyle}
+              activeOpacity={0.5}
+              onPress={() => saveCompanyTimetable()}>
+              <Text style={styles.buttonTextStyle}>Continue</Text>
+            </TouchableOpacity>
           </View>
-          {isMonday ?
-            <View style={styles.timeTableSection}>
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(open) => setMondayOpen(open)}
-                placeholder="Enter open hour"
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="sentences"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                value={mondayOpen ?? ""}
-              />
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(close) => setMondayClose(close)}
-                placeholder="Enter close hour"
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="sentences"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                value={mondayClose ?? ""}
-              />
-            </View>
-            : <></>
-          }
-          <View style={styles.companySectionStyle}>
-            <View style={styles.checkboxContainer}>
-              <CheckBox value={isTuesday}
-                        onValueChange={setIsTuesday}
-                        style={styles.checkbox}/>
-              <Text style={styles.label}>Tuesday</Text>
-            </View>
-          </View>
-          {isTuesday ?
-            <View style={styles.timeTableSection}>
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(open) => setTuesdayOpen(open)}
-                placeholder="Enter open hour"
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="sentences"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                value={tuesdayOpen ?? ""}
-              />
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(close) => setTuesdayClose(close)}
-                placeholder="Enter close hour"
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="sentences"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                value={tuesdayClose ?? ""}
-              />
-            </View>
-            : <></>
-          }
-          <View style={styles.companySectionStyle}>
-            <View style={styles.checkboxContainer}>
-              <CheckBox value={isWednesday}
-                        onValueChange={setIsWednesday}
-                        style={styles.checkbox}/>
-              <Text style={styles.label}>Wednesday</Text>
-            </View>
-          </View>
-          {isWednesday ?
-            <View style={styles.timeTableSection}>
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(open) => setWednesdayOpen(open)}
-                placeholder="Enter open hour"
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="sentences"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                value={wednesdayOpen ?? ""}
-              />
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(close) => setWednesdayClose(close)}
-                placeholder="Enter close hour"
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="sentences"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                value={wednesdayClose ?? ""}
-              />
-            </View>
-            : <></>
-          }
-          <View style={styles.companySectionStyle}>
-            <View style={styles.checkboxContainer}>
-              <CheckBox value={isThursday}
-                        onValueChange={setIsThursday}
-                        style={styles.checkbox}/>
-              <Text style={styles.label}>Thursday</Text>
-            </View>
-          </View>
-          {isThursday ?
-            <View style={styles.timeTableSection}>
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(open) => setThursdayOpen(open)}
-                placeholder="Enter open hour"
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="sentences"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                value={thursdayOpen ?? ""}
-              />
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(close) => setThursdayClose(close)}
-                placeholder="Enter close hour"
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="sentences"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                value={thursdayClose ?? ""}
-              />
-            </View>
-            : <></>
-          }
-          <View style={styles.companySectionStyle}>
-            <View style={styles.checkboxContainer}>
-              <CheckBox value={isFriday}
-                        onValueChange={setIsFriday}
-                        style={styles.checkbox}/>
-              <Text style={styles.label}>Friday</Text>
-            </View>
-          </View>
-          {isFriday ?
-            <View style={styles.timeTableSection}>
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(open) => setFridayOpen(open)}
-                placeholder="Enter open hour"
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="sentences"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                value={fridayOpen ?? ""}
-              />
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(close) => setFridayClose(close)}
-                placeholder="Enter close hour"
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="sentences"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                value={fridayClose ?? ""}
-              />
-            </View>
-            : <></>
-          }
-          <View style={styles.companySectionStyle}>
-            <View style={styles.checkboxContainer}>
-              <CheckBox value={isSaturday}
-                        onValueChange={setIsSaturday}
-                        style={styles.checkbox}/>
-              <Text style={styles.label}>Saturday</Text>
-            </View>
-          </View>
-          {isSaturday ?
-            <View style={styles.timeTableSection}>
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(open) => setSaturdayOpen(open)}
-                placeholder="Enter open hour"
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="sentences"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                value={saturdayOpen ?? ""}
-              />
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(close) => setSaturdayClose(close)}
-                placeholder="Enter close hour"
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="sentences"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                value={saturdayClose ?? ""}
-              />
-            </View>
-            : <></>
-          }
-          <View style={styles.companySectionStyle}>
-            <View style={styles.checkboxContainer}>
-              <CheckBox value={isSunday}
-                        onValueChange={setIsSunday}
-                        style={styles.checkbox}/>
-              <Text style={styles.label}>Sunday</Text>
-            </View>
-          </View>
-          {isSunday ?
-            <View style={styles.timeTableSection}>
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(open) => setSundayOpen(open)}
-                placeholder="Enter open hour"
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="sentences"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                value={sundayOpen ?? ""}
-              />
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(close) => setSundayClose(close)}
-                placeholder="Enter close hour"
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="sentences"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                value={sundayClose ?? ""}
-              />
-            </View>
-            : <></>
-          }
-          {errorText !== '' ? (
-            <Text style={styles.errorTextStyle}>
-              {errorText}
-            </Text>
-          ) : null}
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            activeOpacity={0.5}
-            onPress={() => saveCompanyTimetable()}>
-            <Text style={styles.buttonTextStyle}>Continue</Text>
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
-    </ScrollView>
+        </KeyboardAvoidingView>
+      </ScrollView>
+    </View>
   )
 }
 
@@ -523,9 +528,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
   },
-  timetableViewStyle: {
-    marginTop: 125,
-  }
 })
 
 export default CompanyTimetable;
