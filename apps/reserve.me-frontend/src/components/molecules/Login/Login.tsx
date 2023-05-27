@@ -8,7 +8,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({navigation}: any) => {
 
-  // TODO Store login state
   const [isLoginSucceed, setIsLoginSucceed] = useState<boolean>(false);
   const [phoneNumber, setPhoneNumber] = useState<string>();
   const [authorizationCode, setAuthorizationCode] = useState<string>('');

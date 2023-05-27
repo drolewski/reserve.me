@@ -39,8 +39,6 @@ export const authorize = (authorizationRequest: AuthorizationRequest) => {
     .catch(error => console.error(error))
 }
 
-
-// TODO api call util
 export const parseResponse = (response: Response) => {
   if (response.status !== 200) {
     return response.json();
