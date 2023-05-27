@@ -7,6 +7,8 @@ import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TouchableOpacity, Vi
 
 const SearchCompanyDetails = ({route, navigation}: any) => {
 
+  // TODO search details
+
   const [companyData, setCompanyData] = useState<CompanyResponse>();
   const [reservationData, setReservationData] = useState<ReservationListResponse>();
 

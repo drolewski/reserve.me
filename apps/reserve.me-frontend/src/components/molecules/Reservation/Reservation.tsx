@@ -7,6 +7,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Reservation = ({route, navigation}: any) => {
 
+  // TODO Reservation styles
+
   const {services, hour, date, companyName} = route.params;
 
   const [servicesData, setServicesData] = useState<{ key: number, value: string }[]>([]);

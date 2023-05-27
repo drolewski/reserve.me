@@ -4,6 +4,8 @@ import { Text } from 'react-native';
 
 const Home = () => {
 
+  // TODO Home screen
+
   const [storedData, setStoredData] = useState<string>();
 
   useEffect(() => {
