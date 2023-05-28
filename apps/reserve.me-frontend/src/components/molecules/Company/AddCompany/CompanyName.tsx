@@ -1,11 +1,10 @@
 import {KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import {createRef, useState} from 'react';
+import {createRef, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {CompanyModel} from './CompanyModel';
 
 const CompanyName = ({navigation, route}: any) => {
 
-  const {name, description, category, contact, address, openingHours, services}: CompanyModel = route.params ?? {};
+  const {name, description, category, contact, address, openingHours, services, update} = route.params ?? {};
 
   const [nameValue, setNameValue] = useState<string>(name ?? "");
   const [descriptionValue, setDescriptionValue] = useState<string>(description ?? "");
@@ -27,10 +26,10 @@ const CompanyName = ({navigation, route}: any) => {
       category, contact, address, openingHours, services,
       name: nameValue,
       description: descriptionValue
-    })).then(r => console.log(r));
+    })).then(r => null);
     navigation.navigate('Company Category', {
       category, contact, address, openingHours, services,
-      name: nameValue, description: descriptionValue
+      name: nameValue, description: descriptionValue, update
     });
   }
 
@@ -38,16 +37,19 @@ const CompanyName = ({navigation, route}: any) => {
     <View style={{flex: 1, justifyContent: 'center'}}>
       <KeyboardAvoidingView enabled>
         <View style={styles.sectionStyle}>
-          <TextInput
-            style={styles.inputStyle}
-            onChangeText={(name) => setNameValue(name)}
-            placeholder="Enter company name"
-            placeholderTextColor="#8b9cb5"
-            autoCapitalize="sentences"
-            returnKeyType="next"
-            onSubmitEditing={() => descriptionRef.current && descriptionRef.current.focus()}
-            blurOnSubmit={false}
-          />
+          {
+            update ? <Text style={styles.infoStyle}>{name}</Text> : <TextInput
+              style={styles.inputStyle}
+              onChangeText={(name) => setNameValue(name)}
+              placeholder="Enter company name"
+              placeholderTextColor="#8b9cb5"
+              autoCapitalize="sentences"
+              returnKeyType="next"
+              value={nameValue}
+              onSubmitEditing={() => descriptionRef.current && descriptionRef.current.focus()}
+              blurOnSubmit={false}
+            />
+          }
         </View>
         <View style={styles.sectionStyle}>
           <TextInput
@@ -60,6 +62,7 @@ const CompanyName = ({navigation, route}: any) => {
             placeholderTextColor="#8b9cb5"
             autoCapitalize="sentences"
             returnKeyType="next"
+            value={descriptionValue}
             ref={descriptionRef}
             blurOnSubmit={false}
           />
@@ -163,6 +166,13 @@ const styles = StyleSheet.create({
   },
   label: {
     margin: 8,
+  },
+  infoStyle: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontWeight: "bold",
+    fontSize: 18,
   },
 })
 

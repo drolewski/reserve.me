@@ -1,12 +1,12 @@
 import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {saveCompanyApiCall} from '../../../../services/company/CompanyService';
+import {saveCompanyApiCall, updateCompanyApiCall} from '../../../../services/company/CompanyService';
 import {ErrorResponse} from '../../../../services/error/ErrorResponse';
 import {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CompanySummary = ({route, navigation}: any) => {
 
-  const {name, description, category, contact, address, openingHours, services} = route.params ?? {};
+  const {name, description, category, contact, address, openingHours, services, update} = route.params ?? {};
 
   const [errorText, setErrorText] = useState<string>("");
   const [storedPhoneNumber, setStoredPhoneNumber] = useState<string>("");
@@ -19,7 +19,21 @@ const CompanySummary = ({route, navigation}: any) => {
     const companyRequest = {
       name, description, category, contact, address, openingHours, services, ownerId: storedPhoneNumber
     };
-    AsyncStorage.removeItem('@newcompany').then(r => console.log(r));
+    AsyncStorage.removeItem('@newcompany').then(r => null);
+    if (!!update) {
+      updateCompanyApiCall(companyRequest)
+        .then((response: ErrorResponse) => {
+          if (!!response) {
+            setErrorText(response.message);
+            return;
+          }
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'Add'}],
+          });
+        });
+      return;
+    }
     saveCompanyApiCall(companyRequest)
       .then((response: ErrorResponse) => {
         if (!!response) {
@@ -66,20 +80,20 @@ const CompanySummary = ({route, navigation}: any) => {
         <View style={styles.companySectionStyle}>
           <Text style={styles.companyInfo}>Working days</Text>
           {openingHours?.map((openingHour: any) =>
-            <>
+            <View key={openingHour.weekDay}>
               <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Week
                 day: </Text>{openingHour.weekDay}</Text>
               <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Open: </Text>{openingHour.open}
               </Text>
               <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Close: </Text>{openingHour.close}
               </Text>
-            </>
+            </View>
           )}
         </View>
         <View style={styles.companySectionStyle}>
           <Text style={styles.companyInfo}>Services</Text>
           {services?.map((service: any) =>
-            <>
+            <View key={service.name}>
               <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Service name: </Text>{service.name}
               </Text>
               <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Price: </Text>{service.price}
@@ -88,7 +102,7 @@ const CompanySummary = ({route, navigation}: any) => {
                 time: </Text>{service.serviceTime}</Text>
               <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Working
                 days: </Text>{service.weekDays.join(", ")}</Text>
-            </>)}
+            </View>)}
         </View>
         {errorText !== '' ? (
           <Text style={styles.errorTextStyle}>

@@ -3,7 +3,6 @@ package com.drolewski.reservemebackend.company;
 import com.drolewski.reservemebackend.company.model.CompanyListResponse;
 import com.drolewski.reservemebackend.company.model.CompanyRequest;
 import com.drolewski.reservemebackend.company.model.CompanyResponse;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +26,8 @@ public class CompanyController {
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping
-    public ResponseEntity<Void> updateCompany(@RequestBody @Valid final CompanyRequest companyRequest) {
+    @PostMapping("update")
+    public ResponseEntity<Void> updateCompany(@RequestBody final CompanyRequest companyRequest) {
         companyService.updateCompany(companyRequest);
         return ResponseEntity.ok().build();
     }
@@ -50,7 +49,7 @@ public class CompanyController {
     }
 
     @GetMapping("name/{companyName}")
-    public ResponseEntity<CompanyResponse> getCompanyByName( @PathVariable final String companyName) {
+    public ResponseEntity<CompanyResponse> getCompanyByName(@PathVariable final String companyName) {
         return ResponseEntity.ok(companyService.getCompanyByName(companyName));
     }
 

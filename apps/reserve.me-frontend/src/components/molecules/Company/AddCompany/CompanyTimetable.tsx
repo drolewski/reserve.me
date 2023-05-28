@@ -15,7 +15,7 @@ import {CompanyModel} from './CompanyModel';
 
 const CompanyTimetable = ({route, navigation}: any) => {
 
-  const {name, description, category, contact, address, openingHours, services}: CompanyModel = route.params ?? {};
+  const {name, description, category, contact, address, openingHours, services, update} = route.params ?? {};
 
   const [isMonday, setIsMonday] = useState<boolean>(false);
   const [mondayOpen, setMondayOpen] = useState<string>();
@@ -43,29 +43,41 @@ const CompanyTimetable = ({route, navigation}: any) => {
 
   useEffect(() => {
     if (!!openingHours && openingHours.length > 0) {
+      formatTime(openingHours[0].open);
       setIsMonday(!!openingHours[0].open && !!openingHours[0].close);
-      setMondayOpen(openingHours[0].open ?? "");
-      setMondayClose(openingHours[0].close ?? "");
+      setMondayOpen(formatTime(openingHours[0].open) ?? "");
+      setMondayClose(formatTime(openingHours[0].close) ?? "");
       setIsTuesday(!!openingHours[1].open && !!openingHours[1].close);
-      setTuesdayOpen(openingHours[1].open ?? "");
-      setTuesdayClose(openingHours[1].close ?? "");
+      setTuesdayOpen(formatTime(openingHours[1].open) ?? "");
+      setTuesdayClose(formatTime(openingHours[1].close) ?? "");
       setIsWednesday(!!openingHours[2].open && !!openingHours[2].close);
-      setWednesdayOpen(openingHours[2].open ?? "");
-      setWednesdayClose(openingHours[2].close ?? "");
+      setWednesdayOpen(formatTime(openingHours[2].open) ?? "");
+      setWednesdayClose(formatTime(openingHours[2].close) ?? "");
       setIsThursday(!!openingHours[3].open && !!openingHours[3].close);
-      setThursdayOpen(openingHours[3].open ?? "");
-      setThursdayClose(openingHours[3].close ?? "");
+      setThursdayOpen(formatTime(openingHours[3].open) ?? "");
+      setThursdayClose(formatTime(openingHours[3].close) ?? "");
       setIsFriday(!!openingHours[4].open && !!openingHours[4].close);
-      setFridayOpen(openingHours[4].open ?? "");
-      setFridayClose(openingHours[4].close ?? "");
+      setFridayOpen(formatTime(openingHours[4].open) ?? "");
+      setFridayClose(formatTime(openingHours[4].close) ?? "");
       setIsSaturday(!!openingHours[5].open && !!openingHours[5].close);
-      setSaturdayOpen(openingHours[5].open ?? "");
-      setSaturdayClose(openingHours[5].close ?? "");
+      setSaturdayOpen(formatTime(openingHours[5].open) ?? "");
+      setSaturdayClose(formatTime(openingHours[5].close) ?? "");
       setIsSunday(!!openingHours[6].open && !!openingHours[6].close);
-      setSundayOpen(openingHours[6].open ?? "");
-      setSundayClose(openingHours[6].close ?? "");
+      setSundayOpen(formatTime(openingHours[6].open) ?? "");
+      setSundayClose(formatTime(openingHours[6].close) ?? "");
     }
   }, []);
+
+  const formatTime = (time: any) => {
+    if (time instanceof Array) {
+      return `${time[0]}:${parseMinutes(time[1])}`;
+    }
+    return time;
+  }
+
+  const parseMinutes = (minutes: number) => {
+    return minutes % 60 < 10 ? `0${minutes % 60}` : `${minutes % 60}`
+  }
 
   const saveCompanyTimetable = () => {
     setErrorText('');
@@ -139,9 +151,9 @@ const CompanyTimetable = ({route, navigation}: any) => {
           open: sundayOpen,
           close: sundayClose
         }],
-    })).then(r => console.log(r));
+    })).then(r => null);
     navigation.navigate("Company Service", {
-      name, description, category, contact, address, services,
+      name, description, category, contact, address, services, update,
       openingHours: [
         {
           weekDay: WeekDay.MONDAY,

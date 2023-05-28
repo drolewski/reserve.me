@@ -1,10 +1,11 @@
-import {KeyboardAvoidingView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useEffect, useState} from 'react';
-import {getCompanyList} from '../../../../services/company/CompanyService';
+import {deleteCompanyApiCall, getCompanyDetails, getCompanyList} from '../../../../services/company/CompanyService';
 import {CompanyListResponse} from '../../../../services/company/CompanyListResponse';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const CompanyList = ({navigation}: any) => {
+const CompanyList = ({navigation, route}: any) => {
 
   const [companies, setCompanies] = useState<CompanyListResponse[]>([]);
   const [storedPhoneNumber, setStoredPhoneNumber] = useState<string>("");
@@ -15,7 +16,7 @@ const CompanyList = ({navigation}: any) => {
       getCompanyList(r)
         .then((response: CompanyListResponse[]) => {
           setCompanies(response);
-        })
+        });
     });
   }, []);
 
@@ -36,8 +37,18 @@ const CompanyList = ({navigation}: any) => {
   }
 
   const updateCompany = (companyName: string) => {
-    // TODO handle update company
-    console.log("TODO Handle Update company");
+    getCompanyDetails(storedPhoneNumber, companyName)
+      .then(response => {
+        navigation.navigate('Company Name', {...response, update: true});
+      });
+  }
+
+  const handleDelete = (companyName: string) => {
+    deleteCompanyApiCall(storedPhoneNumber, companyName)
+      .then(response => {
+        const newCompanies = companies.filter(company => company.name !== companyName);
+        setCompanies(newCompanies);
+      })
   }
 
   return <View style={{flex: 1}}>
@@ -50,16 +61,22 @@ const CompanyList = ({navigation}: any) => {
       </TouchableOpacity>
       {
         companies.map(company =>
-          <TouchableHighlight key={company.name} onPress={() => updateCompany(company.name)}>
-            <View style={styles.companySectionStyle}>
-              <Text><Text style={styles.companyInfo}><Text style={styles.companyInfo}>Company
-                Name: </Text></Text>{company.name}</Text>
-              <Text><Text style={styles.companyInfo}><Text style={styles.companyInfo}>Phone
-                number: </Text></Text>{company.contact.phoneNumber}</Text>
-              <Text><Text style={styles.companyInfo}><Text
-                style={styles.companyInfo}>Email: </Text></Text>{company.contact.email}</Text>
+          <View key={company.name} style={styles.companySectionStyle}>
+            <TouchableOpacity style={{display: 'flex', alignItems: 'center'}}
+                              onPress={() => handleDelete(company.name)}>
+              <MaterialCommunityIcons name="delete" color={'red'} size={22}/>
+            </TouchableOpacity>
+            <View>
+              <TouchableOpacity onPress={() => updateCompany(company.name)}>
+                <Text><Text style={styles.companyInfo}><Text style={styles.companyInfo}>Company
+                  Name: </Text></Text>{company.name}</Text>
+                <Text><Text style={styles.companyInfo}><Text style={styles.companyInfo}>Phone
+                  number: </Text></Text>{company.contact.phoneNumber}</Text>
+                <Text><Text style={styles.companyInfo}><Text
+                  style={styles.companyInfo}>Email: </Text></Text>{company.contact.email}</Text>
+              </TouchableOpacity>
             </View>
-          </TouchableHighlight>)
+          </View>)
       }
     </KeyboardAvoidingView>
   </View>

@@ -2,11 +2,10 @@ import {createRef, useState} from 'react';
 import {KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {emailReg} from '../../../../const/RegExp';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {CompanyModel} from './CompanyModel';
 
 const CompanyContact = ({route, navigation}: any) => {
 
-  const {name, description, category, contact, address, openingHours, services}: CompanyModel = route.params ?? {};
+  const {name, description, category, contact, address, openingHours, services, update} = route.params ?? {};
 
   const [emailValue, setEmailValue] = useState<string>(contact?.email ?? "");
   const [phoneNumberValue, setPhoneNumberValue] = useState<string>(contact?.phoneNumber ?? "");
@@ -67,9 +66,7 @@ const CompanyContact = ({route, navigation}: any) => {
           postCode: postCodeValue
         }
       }))
-      .then(r => {
-        console.log(r);
-      });
+      .then(r => null);
     navigation.navigate("Company Timetable", {
       name, description, category,
       openingHours, services,
@@ -82,7 +79,7 @@ const CompanyContact = ({route, navigation}: any) => {
         city: cityValue,
         number: numberValue,
         postCode: postCodeValue
-      }
+      }, update
     });
   }
 

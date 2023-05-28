@@ -7,7 +7,7 @@ import {CompanyModel} from './CompanyModel';
 
 const CompanyService = ({route, navigation}: any) => {
 
-  const {name, description, category, contact, address, openingHours, services}: CompanyModel = route.params ?? {};
+  const {name, description, category, contact, address, openingHours, services, update} = route.params ?? {};
 
   const [serviceName, setServiceName] = useState<string | undefined>();
   const [price, setPrice] = useState<number | undefined>();
@@ -76,7 +76,7 @@ const CompanyService = ({route, navigation}: any) => {
     setServicesList(servicesCopy);
     AsyncStorage.setItem("@newcompany", JSON.stringify({
       name, description, category, contact, address, openingHours, services: servicesCopy
-    })).then(r => console.log(r));
+    })).then(r => null);
   }
 
   useEffect(() => {
@@ -95,9 +95,9 @@ const CompanyService = ({route, navigation}: any) => {
     }
     AsyncStorage.setItem("@newcompany", JSON.stringify({
       name, description, category, contact, address, openingHours, services: servicesList
-    })).then(r => console.log(r));
+    })).then(r => null);
     navigation.navigate("Company Summary", {
-      name, description, category, contact, address, openingHours, services: servicesList
+      name, description, category, contact, address, openingHours, services: servicesList, update
     });
   }
 

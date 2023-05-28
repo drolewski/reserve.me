@@ -43,34 +43,34 @@ public class CompanyService {
     }
 
     public void updateCompany(final CompanyRequest companyRequest) {
-        final Company company = companyRepository.findFirstByOwnerIdAndName(companyRequest.getOwnerId(), companyRequest.getName());
+        Company company = companyRepository.findFirstByOwnerIdAndName(companyRequest.getOwnerId(), companyRequest.getName());
         if (companyRequest.getName() != null) {
-            company.toBuilder()
-                    .name(companyRequest.getName());
+            company = company.toBuilder()
+                    .name(companyRequest.getName()).build();
         }
         if (companyRequest.getDescription() != null) {
-            company.toBuilder()
-                    .description(companyRequest.getDescription());
+            company = company.toBuilder()
+                    .description(companyRequest.getDescription()).build();
         }
         if (companyRequest.getOpeningHours() != null) {
-            company.toBuilder()
-                    .openingHours(companyRequest.getOpeningHours());
+            company = company.toBuilder()
+                    .openingHours(companyRequest.getOpeningHours()).build();
         }
         if (companyRequest.getContact() != null) {
-            company.toBuilder()
-                    .contact(companyRequest.getContact());
+            company = company.toBuilder()
+                    .contact(companyRequest.getContact()).build();
         }
         if (companyRequest.getServices() != null) {
-            company.toBuilder()
-                    .services(companyRequest.getServices());
+            company = company.toBuilder()
+                    .services(companyRequest.getServices()).build();
         }
         if (companyRequest.getAddress() != null) {
-            company.toBuilder()
-                    .address(companyRequest.getAddress());
+            company = company.toBuilder()
+                    .address(companyRequest.getAddress()).build();
         }
         if (companyRequest.getCategory() != null) {
-            company.toBuilder()
-                    .category(companyRequest.getCategory());
+            company = company.toBuilder()
+                    .category(companyRequest.getCategory()).build();
         }
         companyRepository.save(company);
     }

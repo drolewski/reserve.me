@@ -8,7 +8,7 @@ import {CompanyModel} from './CompanyModel';
 
 const CompanyCategory = ({route, navigation}: any) => {
 
-  const {name, description, category, contact, address, openingHours, services}: CompanyModel = route.params ?? {};
+  const {name, description, category, contact, address, openingHours, services, update} = route.params ?? {};
 
   const [categoryValue, setCategoryValue] = useState<string[]>([]);
   const [categoriesValue, setCategoriesValue] = useState<CategoryData[]>([]);
@@ -32,9 +32,9 @@ const CompanyCategory = ({route, navigation}: any) => {
     }
     AsyncStorage.setItem("@newcompany", JSON.stringify({
       name, description, contact, address, openingHours, services, category: categoryValue
-    })).then(r => console.log(r));
+    })).then(r => null);
     navigation.navigate("Company Contact", {
-      name, description, contact, address, openingHours, services, category: categoryValue
+      name, description, contact, address, openingHours, services, category: categoryValue, update
     });
   }
 
