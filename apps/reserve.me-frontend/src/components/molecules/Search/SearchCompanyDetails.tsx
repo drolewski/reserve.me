@@ -7,8 +7,6 @@ import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TouchableOpacity, Vi
 
 const SearchCompanyDetails = ({route, navigation}: any) => {
 
-  // TODO search details
-
   const [companyData, setCompanyData] = useState<CompanyResponse>();
   const [reservationData, setReservationData] = useState<ReservationListResponse>();
 
@@ -72,10 +70,10 @@ const SearchCompanyDetails = ({route, navigation}: any) => {
       const day = date.getDay();
       const openingHour = getOpeningHour(day);
       if (!openingHour || !openingHour.close || !openingHour.open) {
-        return <View key={date.toLocaleDateString()} style={styles.sectionStyle}>
-          <Text>{openingHour?.weekDay ?? ""}</Text>
-          <Text>{date.toLocaleDateString()}</Text>
-          <Text>CLOSED</Text>
+        return <View key={date.toLocaleDateString()} style={{display: 'flex', flexDirection: 'column', marginTop: 20}}>
+          <Text style={styles.timetableInfo}>{openingHour?.weekDay ?? ""}</Text>
+          <Text style={styles.timetableInfo}>{date.toLocaleDateString()}</Text>
+          <Text style={styles.timetableInfo}>CLOSED</Text>
         </View>
       }
       const closeMinutes = openingHour.close[0] * 60 + openingHour.close[1];
@@ -88,20 +86,21 @@ const SearchCompanyDetails = ({route, navigation}: any) => {
       }
 
       return (
-        <View key={date.toDateString()} style={styles.sectionStyle}>
-          <Text>{openingHour.weekDay}</Text>
-          <Text>{date.toLocaleDateString()}</Text>
+        <View key={date.toDateString()} style={{display: 'flex', flexDirection: 'column', marginTop: 20}}>
+          <Text style={styles.timetableInfo}>{openingHour.weekDay}</Text>
+          <Text style={styles.timetableInfo}>{date.toLocaleDateString()}</Text>
           {hours.length > 0 ?
             hours.map(hour => {
+                let reserved = isReserved(date, hour);
                 return <TouchableOpacity key={hour}
-                                         style={isReserved(date, hour) ? styles.reservedButtonStyle : styles.buttonStyle}
+                                         style={reserved ? styles.reservedButtonStyle : styles.buttonStyle}
                                          activeOpacity={0.5}
-                                         onPress={() => navigation.navigate('Reservation', {
+                                         onPress={() => !reserved ? navigation.navigate('Reservation', {
                                            services: companyData?.services,
                                            hour: hour,
                                            date: date,
                                            companyName: companyData?.name
-                                         })}>
+                                         }) : null}>
                   <Text style={styles.buttonTextStyle}>{hour}</Text>
                 </TouchableOpacity>
               }
@@ -115,13 +114,41 @@ const SearchCompanyDetails = ({route, navigation}: any) => {
     return minutes % 60 < 10 ? `0${minutes % 60}` : `${minutes % 60}`
   }
 
+  const getCompanyServices = () => {
+    return companyData?.services.map(service => <View key={service.name}
+                                                      style={{display: 'flex', flexDirection: 'column', marginTop: 20}}>
+        <Text style={styles.companyInfo}>Company Service:</Text>
+        <Text style={styles.companyTextStyle}>Service name: {service.name}</Text>
+        <Text style={styles.companyTextStyle}>Service price: {service.price}</Text>
+        <Text style={styles.companyTextStyle}>Service time: {service.serviceTime}</Text>
+      </View>
+    );
+  }
+
   return <View style={{flex: 1}}>
-    <ScrollView keyboardShouldPersistTaps="handled"
-                contentContainerStyle={{
-                  alignContent: 'center',
-                  justifyContent: 'center'
-                }}>
+    <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{
+      alignContent: 'center',
+      justifyContent: 'center'
+    }}>
       <KeyboardAvoidingView enabled>
+        <View style={styles.serviceCategorySectionStyle}>
+          <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Company
+            name: </Text>{companyData?.name ?? ""}
+          </Text>
+          <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Company
+            email: </Text>{companyData?.contact?.email ?? ""}</Text>
+          <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Company phone
+            number:</Text>{companyData?.contact?.phoneNumber ?? ""}</Text>
+          <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Company
+            street: </Text>{companyData?.address?.street ?? ""}</Text>
+          <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Company address
+            number: </Text>{companyData?.address?.number ?? ""}</Text>
+          <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Company post
+            code: </Text>{companyData?.address?.postCode ?? ""}</Text>
+          <Text style={styles.companyTextStyle}><Text style={styles.companyInfo}>Company
+            city: </Text>{companyData?.address?.city ?? ""}</Text>
+          {getCompanyServices()}
+        </View>
         {displayTimetable()}
       </KeyboardAvoidingView>
     </ScrollView>
@@ -225,6 +252,32 @@ const styles = StyleSheet.create({
   label: {
     margin: 8,
   },
+  serviceCategorySectionStyle: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginBottom: 10,
+    marginLeft: 35,
+    marginRight: 35,
+  },
+  companyTextStyle: {
+    color: '#8b9cb5',
+    fontSize: 18,
+  },
+  companyInfo: {
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  timetableInfo: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  companyTailStyle: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#dadae8',
+  }
 })
 
 export default SearchCompanyDetails;

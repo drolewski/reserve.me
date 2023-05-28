@@ -1,6 +1,7 @@
 import {KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native"
 import {useEffect, useState} from 'react';
-import {updateUser} from '../../../../services/user/UserService';
+import {updateUser, userApi} from '../../../../services/user/UserService';
+import {UserDataResponse} from '../../../../services/user/UserDataResponse';
 
 const Profile = ({route}: any) => {
 
@@ -17,15 +18,26 @@ const Profile = ({route}: any) => {
   const [errorText, setErrorText] = useState<string>();
 
   useEffect(() => {
-    setName(profile.name);
-    setNewName(profile.name);
-    setSurname(profile.surname);
-    setNewSurname(profile.surname);
-    setSex(profile.sex);
-    setNewSex(profile.sex);
-    setBirthday(profile.birthday);
-    setNewBirthday(profile.birthday);
+    userApi(phoneNumber)
+      .then((response: UserDataResponse) => {
+        setName(response.profile?.name);
+        setNewName(response.profile?.name);
+        setSurname(response.profile?.surname);
+        setNewSurname(response.profile?.surname);
+        setSex(response.profile?.sex);
+        setNewSex(response.profile?.sex);
+        setBirthday(!!response?.profile?.birthday ? getDate(response?.profile?.birthday) : undefined);
+        setNewBirthday(!!response?.profile?.birthday ? getDate(response?.profile?.birthday) : undefined);
+      });
   }, []);
+
+
+  const getDate = (date: Date) => {
+    let resultDate = new Date(date);
+    const d = resultDate.getDate();
+    resultDate.setDate(d + 1);
+    return resultDate.toISOString().substring(0, 10);
+  }
 
   const saveProfileData = () => {
     if (!!phoneNumber && (name !== newName || surname !== newSurname || sex !== newSex || birthday !== newBirthday)) {

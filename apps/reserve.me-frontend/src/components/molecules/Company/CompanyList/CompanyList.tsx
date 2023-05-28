@@ -20,14 +20,14 @@ const CompanyList = ({navigation}: any) => {
   }, []);
 
   if (companies.length === 0) {
-    return <View style={{flex: 1, justifyContent: 'center'}}>
+    return <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}>
       <KeyboardAvoidingView enabled>
-        <View style={styles.sectionStyle}>
+        <View style={styles.companySectionStyle}>
           <Text style={styles.successTextStyle}>You don't have company yet</Text>
           <TouchableOpacity
             style={styles.buttonStyle}
             activeOpacity={0.5}
-            onPress={() => navigation.navigate('CompanyName')}>
+            onPress={() => navigation.navigate('Company Name')}>
             <Text style={styles.buttonTextStyle}>Add company</Text>
           </TouchableOpacity>
         </View>

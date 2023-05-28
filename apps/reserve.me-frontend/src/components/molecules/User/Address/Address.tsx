@@ -1,6 +1,7 @@
 import {KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native"
 import {useEffect, useState} from 'react';
-import {updateUser} from '../../../../services/user/UserService';
+import {updateUser, userApi} from '../../../../services/user/UserService';
+import {UserDataResponse} from '../../../../services/user/UserDataResponse';
 
 const Address = ({route}: any) => {
 
@@ -17,14 +18,17 @@ const Address = ({route}: any) => {
   const [errorText, setErrorText] = useState<string>();
 
   useEffect(() => {
-    setStreet(address.street);
-    setNewStreet(address.street);
-    setNumber(address.number);
-    setNewNumber(address.number);
-    setCity(address.city);
-    setNewCity(address.city);
-    setPostCode(address.postCode);
-    setNewPostCode(address.postCode);
+    userApi(phoneNumber)
+      .then((response: UserDataResponse) => {
+        setStreet(response?.address?.street);
+        setNewStreet(response?.address?.street);
+        setNumber(response?.address?.number);
+        setNewNumber(response?.address?.number);
+        setCity(response?.address?.city);
+        setNewCity(response?.address?.city);
+        setPostCode(response?.address?.postCode);
+        setNewPostCode(response?.address?.postCode);
+      });
   }, []);
 
   const saveAddressData = () => {

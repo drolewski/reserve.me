@@ -4,7 +4,7 @@ import {UserDataResponse} from '../../../services/user/UserDataResponse';
 import {userApi} from '../../../services/user/UserService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const User = ({navigation}: any) => {
+const User = ({navigation, route}: any) => {
 
   const [user, setUser] = useState<UserDataResponse>();
   const [storedPhoneNumber, setStoredPhoneNumber] = useState<string>("");
@@ -17,13 +17,6 @@ const User = ({navigation}: any) => {
     });
   }, []);
 
-  const getDate = (date: Date) => {
-    let resultDate = new Date(date);
-    const d = resultDate.getDate();
-    resultDate.setDate(d + 1);
-    return resultDate.toISOString().substring(0, 10);
-  }
-
   return (
     <View style={{flex: 1, justifyContent: 'center'}}>
       <Text style={styles.successTextStyle}>{user?.userName}</Text>
@@ -32,12 +25,6 @@ const User = ({navigation}: any) => {
         style={styles.buttonStyle}
         activeOpacity={0.5}
         onPress={() => navigation.navigate('Profile', {
-          profile: {
-            name: user?.profile?.name ?? '',
-            surname: user?.profile?.surname ?? '',
-            sex: user?.profile?.sex ?? '',
-            birthday: !!user?.profile?.birthday ? getDate(user?.profile?.birthday) : null,
-          },
           phoneNumber: storedPhoneNumber
         })}>
         <Text style={styles.buttonTextStyle}>Personal data</Text>
@@ -46,12 +33,6 @@ const User = ({navigation}: any) => {
         style={styles.buttonStyle}
         activeOpacity={0.5}
         onPress={() => navigation.navigate('Address', {
-          address: {
-            street: user?.address?.street ?? '',
-            city: user?.address?.city ?? '',
-            postCode: user?.address?.postCode ?? '',
-            number: user?.address?.number ?? '',
-          },
           phoneNumber: storedPhoneNumber
         })}>
         <Text style={styles.buttonTextStyle}>Address</Text>

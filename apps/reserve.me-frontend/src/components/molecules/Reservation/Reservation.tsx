@@ -7,8 +7,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Reservation = ({route, navigation}: any) => {
 
-  // TODO Reservation styles
-
   const {services, hour, date, companyName} = route.params;
 
   const [servicesData, setServicesData] = useState<{ key: number, value: string }[]>([]);
@@ -27,7 +25,6 @@ const Reservation = ({route, navigation}: any) => {
 
   const reserve = () => {
     setErrorText("");
-    console.log(pickedService);
     if (pickedService === undefined) {
       setErrorText("Select service");
       return;
@@ -51,19 +48,14 @@ const Reservation = ({route, navigation}: any) => {
   }
 
   return <View style={{flex: 1}}>
-    <ScrollView keyboardShouldPersistTaps="handled"
-                contentContainerStyle={{
-                  alignContent: 'center',
-                  justifyContent: 'center'
-                }}>
+    <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{
+      alignContent: 'center',
+      justifyContent: 'center'
+    }}>
       <KeyboardAvoidingView enabled>
-        <View style={styles.sectionStyle}>
-          <Text>{date.toLocaleDateString()}</Text>
-        </View>
-        <View style={styles.sectionStyle}>
-          <Text>{hour}</Text>
-        </View>
-        <View style={styles.serviceCategorySectionStyle}>
+        <View style={{display: 'flex', flexDirection: 'column', marginTop: 20}}>
+          <Text style={styles.timetableInfo}>{date.toLocaleDateString()}</Text>
+          <Text style={styles.timetableInfo}>{hour}</Text>
           <SelectList
             boxStyles={styles.dropdownInputStyle}
             dropdownTextStyles={styles.dropdownTextStyle}
@@ -160,6 +152,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 30,
     borderColor: '#dadae8',
+    marginTop: 20
   },
   container: {
     flex: 1,
@@ -178,6 +171,17 @@ const styles = StyleSheet.create({
   },
   label: {
     margin: 8,
+  },
+  companyInfo: {
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  timetableInfo: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontWeight: "bold",
+    fontSize: 18,
   },
 })
 
