@@ -9,9 +9,6 @@ import {ErrorResponse} from '../../../services/error/ErrorResponse';
 
 const Home = ({navigation}: any) => {
 
-  // TODO Home screen
-  // TODO delete reservation
-
   const [userPhoneNumber, setUserPhoneNumber] = useState<string>();
   const [userReservations, setUserReservations] = useState<UserReservationListResponse[]>([]);
   const [historicReservations, setHistoricReservations] = useState<UserReservationListResponse[]>([]);
