@@ -1,5 +1,6 @@
 package com.drolewski.reservemebackend.reservation;
 
+import com.drolewski.reservemebackend.reservation.model.DeleteReservationRequest;
 import com.drolewski.reservemebackend.reservation.model.ReservationListResponse;
 import com.drolewski.reservemebackend.reservation.model.ReservationRequest;
 import com.drolewski.reservemebackend.reservation.model.UserReservationListResponse;
@@ -30,6 +31,12 @@ public class ReservationController {
     @GetMapping("{ownerPhoneNumber}")
     public ResponseEntity<List<UserReservationListResponse>> getUserReservation(@PathVariable final String ownerPhoneNumber) {
         return ResponseEntity.ok(reservationService.getUserReservation(ownerPhoneNumber));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteUserReservation(@RequestBody final DeleteReservationRequest deleteReservationRequest) {
+        reservationService.delete(deleteReservationRequest);
+        return ResponseEntity.ok().build();
     }
 
 }

@@ -3,6 +3,7 @@ package com.drolewski.reservemebackend.reservation;
 import com.drolewski.reservemebackend.reservation.db.Reservation;
 import com.drolewski.reservemebackend.reservation.db.ReservationRepository;
 import com.drolewski.reservemebackend.reservation.db.Reserved;
+import com.drolewski.reservemebackend.reservation.model.DeleteReservationRequest;
 import com.drolewski.reservemebackend.reservation.model.ReservationListResponse;
 import com.drolewski.reservemebackend.reservation.model.ReservationRequest;
 import com.drolewski.reservemebackend.reservation.model.UserReservationListResponse;
@@ -62,5 +63,15 @@ public class ReservationService {
         return result;
     }
 
+
+    public void delete(final DeleteReservationRequest deleteReservationRequest) {
+        final Reservation reservation = reservationRepository.findFirstByCompanyName(deleteReservationRequest.getCompanyName());
+        reservation.setReserved(reservation.getReserved().stream()
+                .filter(res -> res.getOwnerPhoneNumber().equals(deleteReservationRequest.getOwnerPhoneNumber())
+                        && res.getServiceName().equals(deleteReservationRequest.getServiceName())
+                        && res.getDate().equals(deleteReservationRequest.getDate())
+                        && res.getStart().equals(deleteReservationRequest.getStart())).toList());
+        reservationRepository.save(reservation);
+    }
 
 }
