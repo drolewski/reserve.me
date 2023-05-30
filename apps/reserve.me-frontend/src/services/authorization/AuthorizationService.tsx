@@ -1,9 +1,10 @@
 import {RegistrationRequest} from './RegisterRequest';
 import {LoginRequest} from './LoginRequest';
 import {AuthorizationRequest} from './AuthorizationRequest';
+import { apiURL } from '../../const/RegExp';
 
 export const register = (registerRequest: RegistrationRequest) => {
-  return fetch('http://localhost:8080/user/register', {
+  return fetch(`${apiURL}/user/register`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -16,7 +17,7 @@ export const register = (registerRequest: RegistrationRequest) => {
 }
 
 export const login = (loginRequest: LoginRequest) => {
-  return fetch('http://localhost:8080/user/login', {
+  return fetch(`${apiURL}/user/login`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -28,7 +29,7 @@ export const login = (loginRequest: LoginRequest) => {
 }
 
 export const authorize = (authorizationRequest: AuthorizationRequest) => {
-  return fetch('http://localhost:8080/user/authorize', {
+  return fetch(`${apiURL}/user/authorize`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
