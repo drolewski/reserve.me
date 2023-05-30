@@ -89,12 +89,14 @@ const Home = ({navigation}: any) => {
                 </View>
               </View>)
           }
-          <TouchableOpacity
-            style={styles.buttonStyle}
-            activeOpacity={0.5}
-            onPress={() => navigation.navigate('History', {history: historicReservations})}>
-            <Text style={styles.buttonTextStyle}>History</Text>
-          </TouchableOpacity>
+          {
+            !!historicReservations ?? <TouchableOpacity
+                  style={styles.buttonStyle}
+                  activeOpacity={0.5}
+                  onPress={() => navigation.navigate('History', {history: historicReservations})}>
+                  <Text style={styles.buttonTextStyle}>History</Text>
+              </TouchableOpacity>
+          }
         </View>
       </KeyboardAvoidingView>
     </ScrollView>
