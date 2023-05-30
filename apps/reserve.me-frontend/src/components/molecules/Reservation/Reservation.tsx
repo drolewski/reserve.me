@@ -32,7 +32,7 @@ const Reservation = ({route, navigation}: any) => {
     const reservationRequest = {
       companyName, reserved: {
         ownerPhoneNumber: storedPhoneNumber,
-        date, start: hour, serviceName: services[pickedService].name
+        date, start: getFormattedHour(hour), serviceName: services[pickedService].name
       }
     }
     reserveApi(reservationRequest).then((response: ErrorResponse) => {
@@ -45,6 +45,10 @@ const Reservation = ({route, navigation}: any) => {
         routes: [{name: 'Home'}],
       });
     });
+  }
+
+  const getFormattedHour = (hour: string) => {
+    return hour.length === 4 ? `0${hour}` : hour;
   }
 
   return <View style={{flex: 1}}>

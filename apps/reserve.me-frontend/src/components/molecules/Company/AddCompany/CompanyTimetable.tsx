@@ -11,7 +11,6 @@ import {
 import {useEffect, useState} from 'react';
 import {WeekDay} from '../../../../services/company/CompanyRequest';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {CompanyModel} from './CompanyModel';
 
 const CompanyTimetable = ({route, navigation}: any) => {
 
@@ -118,38 +117,38 @@ const CompanyTimetable = ({route, navigation}: any) => {
       openingHours: [
         {
           weekDay: WeekDay.MONDAY,
-          open: mondayOpen,
-          close: mondayClose
+          open: getFormattedHour(mondayOpen),
+          close: getFormattedHour(mondayClose)
         },
         {
           weekDay: WeekDay.TUESDAY,
-          open: tuesdayOpen,
-          close: tuesdayClose
+          open: getFormattedHour(tuesdayOpen),
+          close: getFormattedHour(tuesdayClose)
         },
         {
           weekDay: WeekDay.WEDNESDAY,
-          open: wednesdayOpen,
-          close: wednesdayClose
+          open: getFormattedHour(wednesdayOpen),
+          close: getFormattedHour(wednesdayClose)
         },
         {
           weekDay: WeekDay.THURSDAY,
-          open: thursdayOpen,
-          close: thursdayClose
+          open: getFormattedHour(thursdayOpen),
+          close: getFormattedHour(thursdayClose)
         },
         {
           weekDay: WeekDay.FRIDAY,
-          open: fridayOpen,
-          close: fridayClose
+          open: getFormattedHour(fridayOpen),
+          close: getFormattedHour(fridayClose)
         },
         {
           weekDay: WeekDay.SATURDAY,
-          open: saturdayOpen,
-          close: saturdayClose
+          open: getFormattedHour(saturdayOpen),
+          close: getFormattedHour(saturdayClose)
         },
         {
           weekDay: WeekDay.SUNDAY,
-          open: sundayOpen,
-          close: sundayClose
+          open: getFormattedHour(sundayOpen),
+          close: getFormattedHour(sundayClose)
         }],
     })).then(r => null);
     navigation.navigate("Company Service", {
@@ -157,40 +156,44 @@ const CompanyTimetable = ({route, navigation}: any) => {
       openingHours: [
         {
           weekDay: WeekDay.MONDAY,
-          open: mondayOpen,
-          close: mondayClose
+          open: getFormattedHour(mondayOpen),
+          close: getFormattedHour(mondayClose)
         },
         {
           weekDay: WeekDay.TUESDAY,
-          open: tuesdayOpen,
-          close: tuesdayClose
+          open: getFormattedHour(tuesdayOpen),
+          close: getFormattedHour(tuesdayClose)
         },
         {
           weekDay: WeekDay.WEDNESDAY,
-          open: wednesdayOpen,
-          close: wednesdayClose
+          open: getFormattedHour(wednesdayOpen),
+          close: getFormattedHour(wednesdayClose)
         },
         {
           weekDay: WeekDay.THURSDAY,
-          open: thursdayOpen,
-          close: thursdayClose
+          open: getFormattedHour(thursdayOpen),
+          close: getFormattedHour(thursdayClose)
         },
         {
           weekDay: WeekDay.FRIDAY,
-          open: fridayOpen,
-          close: fridayClose
+          open: getFormattedHour(fridayOpen),
+          close: getFormattedHour(fridayClose)
         },
         {
           weekDay: WeekDay.SATURDAY,
-          open: saturdayOpen,
-          close: saturdayClose
+          open: getFormattedHour(saturdayOpen),
+          close: getFormattedHour(saturdayClose)
         },
         {
           weekDay: WeekDay.SUNDAY,
-          open: sundayOpen,
-          close: sundayClose
+          open: getFormattedHour(sundayOpen),
+          close: getFormattedHour(sundayClose)
         }],
     });
+  }
+
+  const getFormattedHour = (hour: string | undefined) => {
+    return !!hour && hour.length === 4 ? `0${hour}` : hour;
   }
 
   return (
